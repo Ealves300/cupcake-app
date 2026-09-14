@@ -73,7 +73,11 @@ html, body {
 body {
   position: relative;
   overflow-x: hidden;
-  padding: 32px 20px 64px;
+  padding: 32px 20px;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background:
     radial-gradient(
         circle at 15% 20%,
@@ -166,6 +170,7 @@ h1, h2, h3 {
 
 /* ---------- Cartão principal ---------- */
 .stage {
+  width: 100%;
   max-width: 1040px;
   margin: 0 auto;
   position: relative;
@@ -567,42 +572,183 @@ h1, h2, h3 {
   color: var(--marrom);
 }
 
-/* ---------- Responsivo ---------- */
+/* =====================================================
+   RESPONSIVO
+   ===================================================== */
+
+/* Tablets e telas médias: empilha, mas mantém o cartão único
+   e bem proporcionado, sem colar no topo */
 @media (max-width: 880px) {
+  body {
+    align-items: flex-start;
+    padding: 28px 18px 40px;
+  }
+
   .stage {
     grid-template-columns: 1fr;
+    min-height: 0;
+    margin: 0 auto;
   }
 
   .summary {
     order: 2;
+    padding: 28px 30px 30px;
     border-radius: 0 0 var(--radius-card-mobile) var(--radius-card-mobile);
   }
 
   .tracking {
     order: 1;
-    padding: 32px 24px;
+    padding: 34px 30px 28px;
     border-radius: var(--radius-card-mobile) var(--radius-card-mobile) 0 0;
+  }
+
+  .topbar {
+    margin-bottom: 4px;
   }
 }
 
-@media (max-width: 460px) {
+/* Celulares: ajustes finos de espaçamento e tipografia para
+   manter a mesma "cara" do desktop, só que compacta */
+@media (max-width: 560px) {
   body {
-    padding: 20px 12px 48px;
+    padding: 20px 14px 32px;
   }
 
-  .tracking {
-    padding: 28px 18px;
+  .stage {
+    border-radius: var(--radius-card-mobile);
+    box-shadow: var(--sombra-card-mobile);
   }
 
   .summary {
-    padding: 28px 22px;
+    padding: 24px 22px 26px;
+    border-radius: 0 0 var(--radius-card-mobile) var(--radius-card-mobile);
+  }
+
+  .tracking {
+    padding: 28px 22px 24px;
+    border-radius: var(--radius-card-mobile) var(--radius-card-mobile) 0 0;
+  }
+
+  .brand .logo-mark {
+    width: 64px;
+    height: 64px;
+  }
+
+  .brand-text .n1 {
+    font-size: 18px;
+  }
+
+  .brand-text .n2 {
+    font-size: 9.5px;
+  }
+
+  .summary-head {
+    margin-top: 14px;
+  }
+
+  .summary-head h2 {
+    font-size: 20px;
+  }
+
+  .tracking-head h1 {
+    font-size: 20px;
+  }
+
+  .tracking-head .sub {
+    font-size: 12.5px;
+  }
+
+  .tracker {
+    margin-top: 24px;
+  }
+
+  .tracker-step {
+    gap: 12px;
+    padding-bottom: 24px;
+  }
+
+  .tracker-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 15px;
+  }
+
+  .tracker-step::before {
+    left: 17px;
+    top: 36px;
+  }
+
+  .tracker-info {
+    padding-top: 4px;
+  }
+
+  .tracker-title {
+    font-size: 13px;
+  }
+
+  .status-card {
+    padding: 14px 16px;
+    gap: 12px;
+    border-radius: 18px;
+  }
+
+  .status-cupcake {
+    width: 44px;
+    height: 44px;
+  }
+
+  .status-cupcake svg {
+    width: 42px;
+    height: 42px;
+  }
+
+  .status-title {
+    font-size: 15.5px;
+  }
+
+  .status-desc {
+    font-size: 12px;
   }
 
   .tracking-actions {
     flex-direction: column;
+    padding-top: 20px;
   }
 
   .ghost-btn {
     width: 100%;
+    padding: 12px 16px;
+    font-size: 13px;
+  }
+}
+
+/* Telas bem pequenas: mais uma rodada de compactação para
+   evitar qualquer aperto ou corte de conteúdo */
+@media (max-width: 360px) {
+  body {
+    padding: 16px 10px 26px;
+  }
+
+  .summary,
+  .tracking {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .brand .logo-mark {
+    width: 56px;
+    height: 56px;
+  }
+
+  .summary-head h2 {
+    font-size: 18px;
+  }
+
+  .totals-row.grand .amount {
+    font-size: 19px;
+  }
+
+  .tracking-head h1 {
+    font-size: 18px;
   }
 }

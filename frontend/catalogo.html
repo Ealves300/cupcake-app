@@ -25,17 +25,25 @@
                         <span class="n2">Confeitaria artesanal</span>
                     </span>
 
-                    <nav class="header-nav">
+                    <nav class="header-nav" id="headerNav">
                         <a href="#cupcakes">Cupcakes</a>
                         <a href="#sobre">Sobre</a>
                         <a href="#encomendar">Encomendar</a> 
                         <a href="acompanhamento.html">Caixinha</a> 
                     </nav>
 
-                    <button class="cart-btn" id="cartBtn" aria-label="Ver sacola">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 8h12l-1 12H7L6 8Z"/><path d="M9 8a3 3 0 0 1 6 0"/></svg>
-                        <span class="cart-count" id="cartCount">0</span>
-                    </button>
+                    <div class="header-actions">
+                        <button class="cart-btn" id="cartBtn" aria-label="Ver sacola">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 8h12l-1 12H7L6 8Z"/><path d="M9 8a3 3 0 0 1 6 0"/></svg>
+                            <span class="cart-count" id="cartCount">0</span>
+                        </button>
+
+                        <button class="menu-btn" id="menuBtn" aria-label="Abrir menu" aria-expanded="false" aria-controls="headerNav">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </button>
+                    </div>
                 </div>
             </header>
 
@@ -123,5 +131,6 @@
 
         
         <script src="js/catalogo.js"></script>
+
     </body>
 </html>

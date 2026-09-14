@@ -295,3 +295,33 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('cartBtn').addEventListener('click', goToOrderSection);
   document.getElementById('orderCta').addEventListener('click', goToPayment);
 });
+
+// Menu mobile (hamburger) — abre/fecha a navegação em telas pequenas
+        (function () {
+            var menuBtn = document.getElementById('menuBtn');
+            var headerNav = document.getElementById('headerNav');
+            if (!menuBtn || !headerNav) return;
+
+            function closeMenu() {
+                headerNav.classList.remove('open');
+                menuBtn.classList.remove('open');
+                menuBtn.setAttribute('aria-expanded', 'false');
+            }
+
+            menuBtn.addEventListener('click', function () {
+                var isOpen = headerNav.classList.toggle('open');
+                menuBtn.classList.toggle('open', isOpen);
+                menuBtn.setAttribute('aria-expanded', String(isOpen));
+            });
+
+            headerNav.querySelectorAll('a').forEach(function (link) {
+                link.addEventListener('click', closeMenu);
+            });
+
+            document.addEventListener('click', function (e) {
+                if (!headerNav.contains(e.target) && !menuBtn.contains(e.target)) {
+                    closeMenu();
+                }
+            });
+        })();
+

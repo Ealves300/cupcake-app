@@ -7,6 +7,8 @@ const express = require("express");
 const cors = require("cors");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const crypto = require("crypto");
+const { OAuth2Client } = require("google-auth-library");
 require("dotenv").config();
 
 const db = require("./database");
@@ -14,6 +16,12 @@ const db = require("./database");
 const app = express();
 const PORT = process.env.PORT || 3000;
 const JWT_SECRET = process.env.JWT_SECRET || "troque-esta-chave-em-producao";
+
+// ⚠️ Coloque essas duas variáveis no seu .env (e no painel do Render em produção)
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+const FACEBOOK_APP_ID = process.env.FACEBOOK_APP_ID;
+
+const googleClient = new OAuth2Client(GOOGLE_CLIENT_ID);
 
 app.use(cors());
 app.use(express.json());
@@ -44,6 +52,26 @@ function verificarToken(req, res, next) {
   } catch (erro) {
     return res.status(401).json({ mensagem: "Sessão inválida ou expirada." });
   }
+}
+
+// ---------- Utilitário: busca usuário pelo e-mail ou cria um novo (login social) ----------
+function buscarOuCriarUsuarioSocial({ nome, email }) {
+  let usuario = db.prepare("SELECT * FROM usuarios WHERE email = ?").get(email);
+
+  if (usuario) {
+    return usuario;
+  }
+
+  // usuários de login social não têm senha própria — geramos um hash aleatório
+  // só para satisfazer a coluna senha_hash (ninguém vai logar com ela)
+  const senhaAleatoria = crypto.randomBytes(32).toString("hex");
+  const senhaHash = bcrypt.hashSync(senhaAleatoria, 10);
+
+  const resultado = db
+    .prepare("INSERT INTO usuarios (nome, email, senha_hash) VALUES (?, ?, ?)")
+    .run(nome, email, senhaHash);
+
+  return { id: resultado.lastInsertRowid, nome, email };
 }
 
 // ---------- ROTA: Cadastro ----------
@@ -109,6 +137,85 @@ app.post("/api/login", async (req, res) => {
   } catch (erro) {
     console.error(erro);
     return res.status(500).json({ mensagem: "Erro interno ao fazer login." });
+  }
+});
+
+// ---------- ROTA: Login com Google ----------
+app.post("/api/login/google", async (req, res) => {
+  const { token: idToken } = req.body;
+
+  if (!idToken) {
+    return res.status(400).json({ mensagem: "Token do Google não informado." });
+  }
+  if (!GOOGLE_CLIENT_ID) {
+    return res.status(500).json({ mensagem: "Login com Google não configurado no servidor." });
+  }
+
+  try {
+    const ticket = await googleClient.verifyIdToken({
+      idToken,
+      audience: GOOGLE_CLIENT_ID,
+    });
+    const payload = ticket.getPayload(); // { email, name, ... }
+
+    if (!payload || !payload.email) {
+      return res.status(401).json({ mensagem: "Não foi possível confirmar sua conta Google." });
+    }
+
+    const usuario = buscarOuCriarUsuarioSocial({
+      nome: payload.name || payload.email.split("@")[0],
+      email: payload.email,
+    });
+
+    const token = jwt.sign({ id: usuario.id }, JWT_SECRET, { expiresIn: "7d" });
+
+    return res.json({
+      mensagem: "Login realizado com sucesso!",
+      token,
+      usuario: { id: usuario.id, nome: usuario.nome, email: usuario.email },
+    });
+  } catch (erro) {
+    console.error("Erro no login com Google:", erro);
+    return res.status(401).json({ mensagem: "Token do Google inválido." });
+  }
+});
+
+// ---------- ROTA: Login com Facebook ----------
+app.post("/api/login/facebook", async (req, res) => {
+  const { token: accessToken } = req.body;
+
+  if (!accessToken) {
+    return res.status(400).json({ mensagem: "Token do Facebook não informado." });
+  }
+  if (!FACEBOOK_APP_ID) {
+    return res.status(500).json({ mensagem: "Login com Facebook não configurado no servidor." });
+  }
+
+  try {
+    const resposta = await fetch(
+      `https://graph.facebook.com/me?fields=id,name,email&access_token=${accessToken}`
+    );
+    const dadosFB = await resposta.json();
+
+    if (dadosFB.error || !dadosFB.email) {
+      return res.status(401).json({ mensagem: "Não foi possível confirmar sua conta Facebook." });
+    }
+
+    const usuario = buscarOuCriarUsuarioSocial({
+      nome: dadosFB.name || dadosFB.email.split("@")[0],
+      email: dadosFB.email,
+    });
+
+    const token = jwt.sign({ id: usuario.id }, JWT_SECRET, { expiresIn: "7d" });
+
+    return res.json({
+      mensagem: "Login realizado com sucesso!",
+      token,
+      usuario: { id: usuario.id, nome: usuario.nome, email: usuario.email },
+    });
+  } catch (erro) {
+    console.error("Erro no login com Facebook:", erro);
+    return res.status(401).json({ mensagem: "Token do Facebook inválido." });
   }
 });
 

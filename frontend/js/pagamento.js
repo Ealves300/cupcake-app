@@ -86,30 +86,54 @@
   tabCartaoBtn.addEventListener('click', () => activateTab('cartao'));
   tabPixBtn.addEventListener('click', () => activateTab('pix'));
 
-  // ---------- Card number formatting + brand detection ----------
+  // ---------- Card number: bandeira, tamanho e formatação ----------
   const cardNumber = document.getElementById('cardNumber');
   const brandIcon = document.getElementById('brandIcon');
   const brandPill = document.getElementById('brandPill');
   const previewNumber = document.getElementById('previewNumber');
 
-  function detectBrand(digits){
-    if(/^4/.test(digits)) return 'VISA';
-    if(/^5[1-5]/.test(digits)) return 'MASTERCARD';
-    if(/^3[47]/.test(digits)) return 'AMEX';
-    if(/^6(?:011|5)/.test(digits)) return 'ELO';
-    return '';
+  // Cada bandeira tem um padrão de prefixo E um tamanho esperado de número.
+  // Isso evita, por exemplo, aceitar um número que começa com 4 (Visa) mas
+  // tem 12 dígitos — o que claramente não é um cartão Visa de verdade.
+  const BRAND_RULES = [
+    { brand: 'AMEX',       test: /^3[47]/,        lengths: [15], cvvLength: 4 },
+    { brand: 'VISA',       test: /^4/,            lengths: [13, 16, 19], cvvLength: 3 },
+    { brand: 'MASTERCARD', test: /^(5[1-5]|2[2-7])/, lengths: [16], cvvLength: 3 },
+    { brand: 'ELO',        test: /^(?:401178|401179|431274|438935|451416|457393|4576|457631|457632|504175|506699|5067|509|627780|636297|636368|65)/, lengths: [16], cvvLength: 3 },
+  ];
+
+  function getBrandRule(digits){
+    return BRAND_RULES.find(r => r.test.test(digits)) || null;
+  }
+
+  // Algoritmo de Luhn: é o dígito verificador real usado por todas as
+  // bandeiras. Um número "aleatório" digitado no campo quase sempre falha
+  // nele, então é a checagem mais simples para saber se o número é plausível.
+  function passesLuhn(digits){
+    let sum = 0;
+    let shouldDouble = false;
+    for(let i = digits.length - 1; i >= 0; i--){
+      let d = parseInt(digits[i], 10);
+      if(shouldDouble){
+        d *= 2;
+        if(d > 9) d -= 9;
+      }
+      sum += d;
+      shouldDouble = !shouldDouble;
+    }
+    return digits.length > 0 && sum % 10 === 0;
   }
 
   cardNumber.addEventListener('input', () => {
-    let digits = cardNumber.value.replace(/\D/g,'').slice(0,16);
+    let digits = cardNumber.value.replace(/\D/g,'').slice(0,19);
     let groups = digits.match(/.{1,4}/g) || [];
     cardNumber.value = groups.join(' ');
 
-    const brand = detectBrand(digits);
-    if(brand){
-      brandIcon.textContent = brand;
+    const rule = getBrandRule(digits);
+    if(rule){
+      brandIcon.textContent = rule.brand;
       brandIcon.classList.add('show');
-      brandPill.textContent = cardType === 'debito' ? 'débito' : brand.toLowerCase();
+      brandPill.textContent = cardType === 'debito' ? 'débito' : rule.brand.toLowerCase();
     } else {
       brandIcon.classList.remove('show');
       brandPill.textContent = cardType === 'debito' ? 'débito' : 'cartão';
@@ -120,23 +144,63 @@
       if((i+1) % 5 !== 0) display += '•'; else display += ' ';
     }
     previewNumber.textContent = display.trim() || '•••• •••• •••• ••••';
+
+    // Ajusta automaticamente o tamanho máximo do CVV para a bandeira detectada
+    if(rule){
+      cardCvv.setAttribute('maxlength', String(rule.cvvLength));
+    } else {
+      cardCvv.setAttribute('maxlength', '4');
+    }
+
+    clearFieldError('fieldNumber');
   });
 
-  // ---------- Name ----------
+  // ---------- Nome: exige nome completo, só letras e espaços ----------
   const cardName = document.getElementById('cardName');
   const previewName = document.getElementById('previewName');
+
+  function isValidCardName(value){
+    const trimmed = value.trim().replace(/\s+/g, ' ');
+    // Letras (com acentos), espaços e apóstrofos/hífen (nomes compostos)
+    const onlyLetters = /^[A-Za-zÀ-ÖØ-öø-ÿ' -]+$/.test(trimmed);
+    const hasTwoWords = trimmed.split(' ').filter(Boolean).length >= 2;
+    return onlyLetters && hasTwoWords && trimmed.length >= 5;
+  }
+
   cardName.addEventListener('input', () => {
     previewName.textContent = cardName.value.trim() ? cardName.value.toUpperCase() : 'SEU NOME AQUI';
+    clearFieldError('fieldName');
   });
 
-  // ---------- Expiry ----------
+  // ---------- Validade: mês real e não vencida ----------
   const cardExpiry = document.getElementById('cardExpiry');
   const previewExpiry = document.getElementById('previewExpiry');
+
+  function isValidExpiry(value){
+    const match = value.match(/^(\d{2})\/(\d{2})$/);
+    if(!match) return false;
+    const month = parseInt(match[1], 10);
+    const year = 2000 + parseInt(match[2], 10);
+    if(month < 1 || month > 12) return false;
+
+    const now = new Date();
+    const currentYear = now.getFullYear();
+    const currentMonth = now.getMonth() + 1;
+
+    // Não aceita cartão já vencido (mês/ano anterior ao atual)
+    if(year < currentYear || (year === currentYear && month < currentMonth)) return false;
+    // Nem uma validade absurdamente distante (mais de 15 anos), sinal de erro de digitação
+    if(year > currentYear + 15) return false;
+
+    return true;
+  }
+
   cardExpiry.addEventListener('input', () => {
     let v = cardExpiry.value.replace(/\D/g,'').slice(0,4);
     if(v.length >= 3) v = v.slice(0,2) + '/' + v.slice(2);
     cardExpiry.value = v;
     previewExpiry.textContent = v || 'MM/AA';
+    clearFieldError('fieldExpiry');
   });
 
   // ---------- CVV + flip ----------
@@ -146,6 +210,7 @@
   cardCvv.addEventListener('input', () => {
     cardCvv.value = cardCvv.value.replace(/\D/g,'').slice(0,4);
     previewCvv.textContent = cardCvv.value ? cardCvv.value.replace(/./g,'•') : '•••';
+    clearFieldError('fieldCvv');
   });
   cardCvv.addEventListener('focus', () => cardFlip.classList.add('flipped'));
   cardCvv.addEventListener('blur', () => cardFlip.classList.remove('flipped'));
@@ -198,8 +263,8 @@
     debitNote.classList.toggle('show', isDebito);
 
     const digits = cardNumber.value.replace(/\D/g,'');
-    const brand = detectBrand(digits);
-    brandPill.textContent = isDebito ? 'débito' : (brand ? brand.toLowerCase() : 'cartão');
+    const rule = getBrandRule(digits);
+    brandPill.textContent = isDebito ? 'débito' : (rule ? rule.brand.toLowerCase() : 'cartão');
 
     if(isDebito) installments.value = '1';
     updatePayButtonText();
@@ -208,22 +273,70 @@
   typeCreditoBtn.addEventListener('click', () => setCardType('credito'));
   typeDebitoBtn.addEventListener('click', () => setCardType('debito'));
 
-  // ---------- Validation helpers ----------
-  function setInvalid(fieldId, invalid){
-    document.getElementById(fieldId).classList.toggle('invalid', invalid);
+  // ---------- Validação + mensagens de erro por campo ----------
+  function setInvalid(fieldId, invalid, message){
+    const field = document.getElementById(fieldId);
+    field.classList.toggle('invalid', invalid);
+
+    let msgEl = field.parentElement.querySelector('.field-error-msg');
+    if(invalid && message){
+      if(!msgEl){
+        msgEl = document.createElement('small');
+        msgEl.className = 'field-error-msg';
+        msgEl.style.color = '#c0392b';
+        msgEl.style.display = 'block';
+        msgEl.style.marginTop = '4px';
+        field.parentElement.appendChild(msgEl);
+      }
+      msgEl.textContent = message;
+    } else if(msgEl){
+      msgEl.remove();
+    }
+  }
+
+  function clearFieldError(fieldId){
+    setInvalid(fieldId, false);
   }
 
   function validateCard(){
     let ok = true;
     const digits = cardNumber.value.replace(/\D/g,'');
-    if(digits.length < 13){ setInvalid('fieldNumber', true); ok = false; } else setInvalid('fieldNumber', false);
+    const rule = getBrandRule(digits);
 
-    if(cardName.value.trim().length < 3){ setInvalid('fieldName', true); ok = false; } else setInvalid('fieldName', false);
+    if(!rule){
+      setInvalid('fieldNumber', true, 'Bandeira não reconhecida.');
+      ok = false;
+    } else if(!rule.lengths.includes(digits.length)){
+      setInvalid('fieldNumber', true, `Número de ${rule.brand} deve ter ${rule.lengths.join(' ou ')} dígitos.`);
+      ok = false;
+    } else if(!passesLuhn(digits)){
+      setInvalid('fieldNumber', true, 'Número de cartão inválido.');
+      ok = false;
+    } else {
+      setInvalid('fieldNumber', false);
+    }
 
-    const expMatch = cardExpiry.value.match(/^(\d{2})\/(\d{2})$/);
-    if(!expMatch || +expMatch[1] < 1 || +expMatch[1] > 12){ setInvalid('fieldExpiry', true); ok = false; } else setInvalid('fieldExpiry', false);
+    if(!isValidCardName(cardName.value)){
+      setInvalid('fieldName', true, 'Digite o nome completo como está no cartão.');
+      ok = false;
+    } else {
+      setInvalid('fieldName', false);
+    }
 
-    if(cardCvv.value.length < 3){ setInvalid('fieldCvv', true); ok = false; } else setInvalid('fieldCvv', false);
+    if(!isValidExpiry(cardExpiry.value)){
+      setInvalid('fieldExpiry', true, 'Validade inválida ou vencida.');
+      ok = false;
+    } else {
+      setInvalid('fieldExpiry', false);
+    }
+
+    const expectedCvvLength = rule ? rule.cvvLength : 3;
+    if(cardCvv.value.length !== expectedCvvLength){
+      setInvalid('fieldCvv', true, `CVV deve ter ${expectedCvvLength} dígitos.`);
+      ok = false;
+    } else {
+      setInvalid('fieldCvv', false);
+    }
 
     return ok;
   }
@@ -232,6 +345,9 @@
   const successState = document.getElementById('successState');
   const orderNumber = document.getElementById('orderNumber');
 
+  // Importante: NUNCA salvamos número de cartão, nome impresso ou CVV em
+  // lugar nenhum (nem localStorage, nem no objeto de pedido). Só guardamos
+  // o método de pagamento escolhido (ex.: "Cartão de Crédito", "Pix").
   function saveCompletedOrder(paymentMethod){
     let orders = [];
     try {

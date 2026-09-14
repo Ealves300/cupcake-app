@@ -4,8 +4,11 @@
    — conversa com o servidor (server.js) via fetch() para a API.
    ========================================================= */
 
-
 const API_URL = 'https://cupcake-app-6c03.onrender.com/api';
+
+// ⚠️ TROQUE PELOS SEUS IDs REAIS (Google Cloud Console / Facebook for Developers)
+const GOOGLE_CLIENT_ID = "SEU_CLIENT_ID_DO_GOOGLE.apps.googleusercontent.com";
+const FACEBOOK_APP_ID = "SEU_APP_ID_DO_FACEBOOK";
 
 // ---------- Elementos da tela ----------
 const form = document.getElementById("login-form");
@@ -13,6 +16,9 @@ const emailInput = document.getElementById("email");
 const senhaInput = document.getElementById("senha");
 const btnEntrar = document.querySelector(".btn-entrar");
 const lembrarCheckbox = document.querySelector('.remember input[type="checkbox"]');
+const botoesSociais = document.querySelectorAll(".btn-social");
+const btnGoogle = botoesSociais[0];
+const btnFacebook = botoesSociais[1];
 
 // cria uma área de mensagens de erro/sucesso, caso ainda não exista no HTML
 let mensagemBox = document.getElementById("mensagem-box");
@@ -69,7 +75,16 @@ function salvarSessao(token, usuario) {
   storage.setItem("doceencanto_usuario", JSON.stringify(usuario));
 }
 
-// ---------- Envio do formulário de LOGIN ----------
+// ---------- Redireciona após login bem-sucedido ----------
+function irParaDestino() {
+  const destino = localStorage.getItem("doceEncantoRedirect") || "catalogo.html";
+  localStorage.removeItem("doceEncantoRedirect");
+  setTimeout(() => {
+    window.location.href = destino;
+  }, 1200);
+}
+
+// ---------- Envio do formulário de LOGIN (e-mail e senha) ----------
 if (form) {
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -106,16 +121,9 @@ if (form) {
         return;
       }
 
- salvarSessao(dados.token, dados.usuario);
+      salvarSessao(dados.token, dados.usuario);
       mostrarMensagem(`Bem-vinda(o) de volta, ${dados.usuario.nome}!`, "sucesso");
-
-      // vai para onde a pessoa estava tentando ir (ex: pagamento) ou para a conta por padrão
-      const destino = localStorage.getItem("doceEncantoRedirect") || "catalogo.html";
-      localStorage.removeItem("doceEncantoRedirect");
-
-      setTimeout(() => {
-        window.location.href = destino;
-      }, 1200);
+      irParaDestino();
     } catch (erro) {
       console.error("Erro ao conectar com o servidor:", erro);
       mostrarMensagem("Não foi possível conectar ao servidor. Verifique se ele está rodando.");
@@ -125,10 +133,102 @@ if (form) {
   });
 }
 
-// ---------- Login social (placeholders — exigem configuração extra no servidor) ----------
-document.querySelectorAll(".btn-social").forEach((botao) => {
-  botao.addEventListener("click", () => {
-    const provedor = botao.textContent.includes("Google") ? "google" : "facebook";
-    mostrarMensagem(`Login com ${provedor === "google" ? "Google" : "Facebook"} ainda não foi configurado no servidor.`);
+/* =========================================================
+   LOGIN SOCIAL — GOOGLE
+   Requer o script no HTML, antes do </body>:
+   <script src="https://accounts.google.com/gsi/client" async defer></script>
+   ========================================================= */
+
+function inicializarGoogle() {
+  if (typeof google === "undefined" || !google.accounts) {
+    console.warn("SDK do Google ainda não carregou.");
+    return;
+  }
+  google.accounts.id.initialize({
+    client_id: GOOGLE_CLIENT_ID,
+    callback: async (response) => {
+      // response.credential é o ID token assinado pelo Google
+      await enviarLoginSocial("google", response.credential);
+    },
   });
-});
+}
+
+if (btnGoogle) {
+  btnGoogle.addEventListener("click", () => {
+    if (typeof google === "undefined" || !google.accounts) {
+      mostrarMensagem("Não foi possível carregar o login do Google. Tente novamente.");
+      return;
+    }
+    google.accounts.id.prompt(); // abre o popup/one-tap do Google
+  });
+}
+
+// o SDK do Google chama window.onload — inicializamos aqui sem sobrescrever outros usos
+window.addEventListener("load", inicializarGoogle);
+
+/* =========================================================
+   LOGIN SOCIAL — FACEBOOK
+   Requer o script no HTML, antes do </body>:
+   <script src="https://connect.facebook.net/pt_BR/sdk.js" async defer></script>
+   ========================================================= */
+
+window.fbAsyncInit = function () {
+  FB.init({
+    appId: FACEBOOK_APP_ID,
+    cookie: true,
+    xfbml: false,
+    version: "v19.0",
+  });
+};
+
+if (btnFacebook) {
+  btnFacebook.addEventListener("click", () => {
+    if (typeof FB === "undefined") {
+      mostrarMensagem("Não foi possível carregar o login do Facebook. Tente novamente.");
+      return;
+    }
+    FB.login(
+      (response) => {
+        if (response.authResponse) {
+          enviarLoginSocial("facebook", response.authResponse.accessToken);
+        } else {
+          mostrarMensagem("Login com Facebook cancelado.");
+        }
+      },
+      { scope: "email,public_profile" }
+    );
+  });
+}
+
+/* =========================================================
+   Envia o token do provedor social pro backend validar
+   e devolver o MESMO formato { token, usuario } do login normal
+   ========================================================= */
+async function enviarLoginSocial(provedor, tokenProvedor) {
+  esconderMensagem();
+  definirCarregando(true);
+
+  try {
+    const resposta = await fetch(`${API_URL}/login/${provedor}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ token: tokenProvedor }),
+    });
+
+    const dados = await resposta.json();
+
+    if (!resposta.ok) {
+      mostrarMensagem(dados.mensagem || `Não foi possível entrar com ${provedor === "google" ? "Google" : "Facebook"}.`);
+      return;
+    }
+
+    salvarSessao(dados.token, dados.usuario);
+    mostrarMensagem(`Bem-vinda(o), ${dados.usuario.nome}!`, "sucesso");
+    irParaDestino();
+  } catch (erro) {
+    console.error(`Erro no login com ${provedor}:`, erro);
+    mostrarMensagem("Não foi possível conectar ao servidor. Verifique se ele está rodando.");
+  } finally {
+    definirCarregando(false);
+  }
+}

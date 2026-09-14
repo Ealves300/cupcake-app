@@ -7,7 +7,7 @@
 
 document.addEventListener('DOMContentLoaded', function () {
   // Mesma origem do server.js, então caminho relativo funciona.
-const API_URL = 'https://cupcake-app-6c03.onrender.com/api';;
+  const API_URL = 'https://cupcake-app-6c03.onrender.com/api';
 
   const form = document.getElementById('signupForm');
   const btn = document.getElementById('btnSubmit');
@@ -45,13 +45,44 @@ const API_URL = 'https://cupcake-app-6c03.onrender.com/api';;
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
   }
 
+  // Apenas letras (com acentos) e espaços — sem números ou símbolos
+  const REGEX_NOME = /^[a-zà-öø-ÿ\s]+$/i;
+
+  function nomeValido(v) {
+    if (!REGEX_NOME.test(v)) return false;
+    // Exige nome + sobrenome (pelo menos duas palavras de verdade)
+    const palavras = v.trim().split(/\s+/).filter(p => p.length > 1);
+    return palavras.length >= 2;
+  }
+
+  // ---------- Nome: força minúsculas e bloqueia caracteres inválidos em tempo real ----------
+  fields.nome.addEventListener('input', () => {
+    const cursor = fields.nome.selectionStart;
+    const antes = fields.nome.value.length;
+    fields.nome.value = fields.nome.value
+      .toLowerCase()
+      .replace(/[^a-zà-öø-ÿ\s]/g, ''); // remove números, símbolos, emojis etc.
+    const depois = fields.nome.value.length;
+    // Reposiciona o cursor considerando os caracteres removidos
+    if (cursor !== null) {
+      fields.nome.selectionStart = fields.nome.selectionEnd = cursor - (antes - depois);
+    }
+  });
+
   // ---------- Validação no navegador (feedback rápido) ----------
   function validar() {
     let valido = true;
 
-    const nome = fields.nome.value.trim();
+    // Colapsa espaços duplos e remove espaços nas pontas antes de validar
+    const nome = fields.nome.value.trim().replace(/\s+/g, ' ');
+    fields.nome.value = nome;
+
     if (nome.length < 3) {
       setMsg('nome', 'Digite seu nome completo.');
+      markInvalid(fields.nome, true);
+      valido = false;
+    } else if (!nomeValido(nome)) {
+      setMsg('nome', 'Use apenas letras e informe nome e sobrenome.');
       markInvalid(fields.nome, true);
       valido = false;
     } else {
@@ -72,6 +103,10 @@ const API_URL = 'https://cupcake-app-6c03.onrender.com/api';;
     const senha = fields.senha.value;
     if (senha.length < 6) {
       setMsg('senha', 'A senha precisa ter ao menos 6 caracteres.');
+      markInvalid(fields.senha, true);
+      valido = false;
+    } else if (senha.toLowerCase().includes(nome.split(' ')[0]) || senha.toLowerCase() === email.toLowerCase()) {
+      setMsg('senha', 'A senha não pode conter seu nome ou e-mail.');
       markInvalid(fields.senha, true);
       valido = false;
     } else {
