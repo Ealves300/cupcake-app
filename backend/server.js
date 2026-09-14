@@ -18,14 +18,12 @@ const JWT_SECRET = process.env.JWT_SECRET || "troque-esta-chave-em-producao";
 app.use(cors());
 app.use(express.json());
 
-// CONFIGURAÇÃO CORRIGIDA: Aponta exatamente para a pasta frontend acima da pasta backend
-// COLE ESTE BLOCO NO LUGAR:
-const caminhoFrontend = "C:\\Users\\emanu\\OneDrive\\Documentos\\faculdade\\loja cupcake\\cupcake-app\\frontend";
+const caminhoFrontend = path.join(__dirname, "..", "frontend");
+
 app.use(express.static(caminhoFrontend));
 
-// Rota extra para garantir que se acessar a raiz /, ele joga para o login
-app.get('/', (req, res) => {
-  res.sendFile(path.join(caminhoFrontend, 'login.html'));
+app.get("/", (req, res) => {
+  res.sendFile(path.join(caminhoFrontend, "login.html"));
 });
 
 console.log("Pasta que o servidor está usando:", caminhoFrontend);
@@ -143,6 +141,6 @@ app.get("/api/perfil", verificarToken, (req, res) => {
   return res.json({ usuario });
 });
 
-app.listen(PORT, () => {
-  console.log(`✅ Servidor Doce Encanto rodando em http://localhost:${PORT}`);
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`✅ Servidor Doce Encanto rodando na porta ${PORT}`);
 });
