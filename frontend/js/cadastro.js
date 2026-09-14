@@ -7,7 +7,7 @@
 
 document.addEventListener('DOMContentLoaded', function () {
   // Mesma origem do server.js, então caminho relativo funciona.
-  const API_URL = "http://localhost:3000/api";
+const API_URL = 'https://cupcake-app-6c03.onrender.com/api';;
 
   const form = document.getElementById('signupForm');
   const btn = document.getElementById('btnSubmit');

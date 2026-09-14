@@ -8,7 +8,7 @@
   // Senha simples só para afastar visitantes casuais.
   // Isso roda no navegador da pessoa, então NÃO é uma proteção real —
   // para um site em produção, o login precisa ser validado por um servidor.
-  const API_URL = 'http://localhost:3000/api';
+  const API_URL = 'https://cupcake-app-6c03.onrender.com/api';
 
   const CATEGORIES = [
     { id: 'classicos',   label: 'Clássicos' },

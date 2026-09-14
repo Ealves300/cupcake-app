@@ -6,7 +6,7 @@
 
 // Como login.html é servido pelo próprio server.js (mesma origem),
 // dá para usar um caminho relativo em vez de "http://localhost:3000".
-const API_URL = "http://localhost:3000/api";
+const API_URL = 'https://cupcake-app-6c03.onrender.com/api';
 
 // ---------- Elementos da tela ----------
 const form = document.getElementById("login-form");
