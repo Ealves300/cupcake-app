@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Painel Administrativo — Doce Encanto</title>
+        <!-- Fontes -->
+        <link rel="icon" href="imagens/icon2.png" type="image/png">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Montserrat:wght@300&family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+        <link rel="stylesheet" href="css/administrativo.css">
+    </head>
+    <body>
+
+        <!-- ============LOGIN============-->
+        <div id="loginScreen">
+            <div class="login-card">
+                <span class="mark"><img src="imagens/icon.png" alt="Logo"></span>
+                <h1>Painel Administrativo</h1>
+                <p>Doce Encanto — acesso restrito à equipe</p>
+
+                <form id="loginForm">
+                    <div class="login-field">
+                        <label for="loginPassword">Senha de acesso</label>
+                        <input type="password" id="loginPassword" placeholder="Digite a senha" autocomplete="current-password">
+                    </div>
+
+                    <p class="login-error" id="loginError">
+                        Senha incorreta. Tente novamente.
+                    </p>
+                    <button type="submit" class="login-btn">Entrar no painel</button>
+                </form>
+
+                <p class="login-hint">
+                    Acesso simples para uso interno da confeitaria.<br>Para um site em produção, use um login com servidor de verdade.
+                </p>
+            </div>
+        </div>
+
+        <!-- ============APP============-->
+        <div id="app">
+            <aside class="sidebar">
+
+                <div class="sidebar-brand">
+                    <span class="mark"><img src="imagens/icon.png" alt="Logo"></span>
+                    <span class="txt">
+                        <span class="n1">Doce Encanto</span><br>
+                        <span class="n2">Confeitaria</span>
+                    </span>
+                </div>
+
+                <nav class="nav-group">
+                    <button class="nav-btn active" data-view="dashboard">
+                        <span class="ico">📊</span>Dashboard
+                    </button>
+
+                    <button class="nav-btn" data-view="pedidos">
+                        <span class="ico">🧾</span>Pedidos
+                        <span class="nav-badge" id="pendingBadge">0</span>
+                    </button>
+
+                    <button class="nav-btn" data-view="cardapio">
+                        <span class="ico">🍰</span>Cardápio
+                    </button>
+                </nav>
+
+                <div class="sidebar-foot">
+                    <button class="logout-btn" id="logoutBtn">
+                        <span class="ico">↩</span>Sair
+                    </button>
+                </div>
+
+            </aside>
+
+            <main class="main">
+
+                <!-- ============PAINEL============-->
+                <section class="view active" id="view-dashboard">
+                    <div class="topbar">
+                        <div>
+                            <h1>Coração da Loja</h1>
+                            <p class="sub">Visão geral da confeitaria</p>
+                        </div>
+
+                        <a href="catalogo.html" class="view-store-link" target="_blank">
+                            Ver loja ↗
+                        </a>
+                    </div>
+
+                    <div class="stat-grid">
+                        <div class="stat-card stat-orders">
+                            <div class="ico">🧾</div>
+                            <div class="label">Pedidos totais</div>
+                            <div class="value" id="statTotalOrders">0</div>
+                        </div>
+
+                        <div class="stat-card stat-revenue">
+                            <div class="ico">💰</div>
+                            <div class="label">Faturamento total</div>
+                            <div class="value" id="statRevenue">R$ 0,00</div>
+                        </div>
+
+                        <div class="stat-card stat-pending">
+                            <div class="ico">⏳</div>
+                            <div class="label">Pedidos pendentes</div>
+                            <div class="value" id="statPending">0</div>
+                        </div>
+
+                        <div class="stat-card stat-flavor">
+                            <div class="ico">⭐</div>
+                            <div class="label">Sabor mais pedido</div>
+                            <div class="value" id="statTopFlavor">—</div>
+                        </div>
+                    </div>
+
+                    <div  class="panel-block">
+                        <h2>Últimos pedidos</h2>
+                        <p class="sub">Os 5 pedidos mais recentes</p>
+                        <div id="recentOrdersList"></div>
+                    </div>
+                </section>
+
+                <!-- ============PEDIDOS============-->
+                <section class="view" id="view-pedidos">
+                    <div class="topbar">
+                        <div>
+                            <h1>Pedidos</h1>
+                            <p class="sub">Acompanhe e atualize o status de cada pedido</p>
+                        </div>
+                    </div>
+
+                    <div  class="filter-pills" id="orderFilters">
+                        <button class="pill-btn active" data-status="todos">Todos</button>
+                        <button class="pill-btn" data-status="pendente">Pendente</button>
+                        <button class="pill-btn" data-status="preparando">Preparando</button>
+                        <button class="pill-btn" data-status="pronto">Pronto</button>
+                        <button class="pill-btn" data-status="entregue">Entregue</button>
+                    </div>
+
+                    <div id="ordersList"></div>
+                </section>
+
+                <!-- ============CARDÁPIO============-->
+                <section class="view" id="view-cardapio">
+                    <div  class="topbar">
+                        <div>
+                            <h1>Cardápio</h1>
+                            <p class="sub">
+                                Sabores exibidos na loja — as alterações aparecem no site na hora
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="menu-toolbar">
+                        <div class="filter-pills" id="menuFilters"></div>
+                        <button class="add-flavor-btn" id="addFlavorBtn">
+                            + Adicionar sabor
+                        </button>
+                    </div>
+
+                    <div class="menu-grid" id="menuGrid"></div>
+                </section>
+            </main>
+        </div>
+
+        <!-- ============ MODAL DE SABOR============-->
+        <div class="modal-overlay" id="flavorModal">
+            <div class="modal-box">
+                <h2 id="flavorModalTitle">Adicionar sabor</h2>
+                <form id="flavorForm">
+                    <input type="hidden" id="flavorId">
+
+                    <div class="field">
+                        <label for="flavorName">Nome do sabor</label>
+                        <input type="text" id="flavorName" placeholder="Ex: Morango Silvestre" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="flavorCategory">Categoria</label>
+                        <select id="flavorCategory"></select> 
+                    </div>
+
+                    <div class="field">
+                        <label for="flavorPrice">Preço (R$)</label>
+                        <input type="text" id="flavorPrice" placeholder="Ex: 14,00" inputmode="decimal" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="flavorDesc">Descrição</label>
+                        <textarea id="flavorDesc" rows="3" placeholder="Descrição curta do sabor"></textarea>
+                    </div>
+
+                    <div class="field">
+                        <label for="flavorImg">URL da imagem (opcional)</label>
+                        <input type="text" id="flavorImg" placeholder="imagens/cupcakes/nome.png">
+                    </div>
+
+                    <div class="modal-actions">
+                        <button type="button" class="btn-secondary" id="cancelFlavorBtn">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="btn-primary">
+                            Salvar sabor
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+        <div class="toast" id="toast">Salvo!</div>
+
+        <script src="js/administrativo.js"></script>
+    </body>
+</html>

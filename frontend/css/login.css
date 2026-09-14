@@ -1,0 +1,611 @@
+  /* =========================================================
+   VARIÁVEIS GLOBAIS
+   ========================================================= */
+
+:root{
+     /* ---------- Cores principais ---------- */
+
+    --rosa-escuro: #7a2e3a;
+    --rosa-vinho: #a13a52;
+    --rosa-vinho-hover: #8a2f44;
+
+    --rosa-claro: #ffd9e3;
+    --rosa-medio: #f8b8c8;
+    --rosa-fundo: #fff0f3;
+    --rosa-hover: #ffeef2;
+
+    /* ---------- Textos ---------- */
+
+    --marrom: #4a2e2b;
+    --marrom-escuro: #4a2828;
+
+    --texto-claro: #a97a86;
+    --placeholder: #c99aa6;
+
+    /* ---------- Fundo ---------- */
+
+    --branco: #fffaf9;
+
+    /* ---------- Gradientes ---------- */
+
+    --gradiente-body:
+        linear-gradient(
+            160deg,
+            #f6a8bd 0%,
+            #f7c7d3 45%,
+            #fbdde6 100%
+        );
+
+    --gradiente-brand:
+        linear-gradient(
+            160deg,
+            var(--rosa-claro),
+            var(--rosa-hover) 70%
+        );
+
+    /* ---------- Sombras ---------- */
+
+    --sombra-card:
+        0 30px 60px rgba(122, 46, 58, 0.25);
+
+    --sombra-card-mobile:
+        0 20px 40px rgba(122, 46, 58, 0.30);
+
+    --sombra-cupcake:
+        0 6px 10px rgba(122, 46, 58, 0.15);
+
+    --sombra-botao:
+        0 10px 20px rgba(161, 58, 82, 0.30);
+
+    /* ---------- Bordas ---------- */
+
+    --borda-input: 1.5px solid var(--rosa-medio);
+
+    /* ---------- Bordas arredondadas ---------- */
+
+    --radius-card: 32px;
+    --radius-card-mobile: 26px;
+    --radius-pill: 30px;
+
+    /* ---------- Transições ---------- */
+
+    --transicao: 0.2s ease;
+    --transicao-rapida: 0.15s ease;
+
+    /* ---------- Fontes ---------- */
+  
+  --fonte-principal: 'Poppins', sans-serif;
+  --fonte-marca: 'Cinzel', serif;
+  --fonte-subtitulo: 'Montserrat', sans-serif;
+  --fonte-titulo: 'Playfair Display', Georgia, serif;
+
+  /* ---------- Tamanhos de fonte ---------- */
+
+--texto-pequeno: 0.85rem;
+--texto-normal: 0.95rem;
+--texto-medio: 1rem;
+--titulo-mobile: 2.4rem;
+--titulo-desktop: 3.5rem;
+  }
+
+  /* =========================================================
+   2. RESET E CONFIGURAÇÕES GERAIS
+   ========================================================= */
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  body{
+    font-family: var(--fonte-principal);
+    min-height: 100vh;
+    display: flex;
+    align-items:center;
+    justify-content:center;
+    background:
+    radial-gradient(
+        circle at 15% 20%,
+        rgba(255, 255, 255, 0.35),
+        transparent 40%
+    ),
+    radial-gradient(
+        circle at 85% 80%,
+        rgba(255, 255, 255, 0.25),
+        transparent 40%
+    ),
+    var(--gradiente-body);
+    padding: 24px;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  
+/* =========================================================
+   3. ELEMENTOS DECORATIVOS
+   Corações e Gota de chocolate
+   ========================================================= */
+  .choco-drip{
+    position:absolute;
+    top:0; left:0;
+    width: 260px;
+    height: 90px;
+    pointer-events:none;
+    z-index: 5;
+  }
+
+  .heart-deco{
+    position:absolute;
+    color: var(--rosa-vinho);
+    opacity:0.55;
+  }
+
+  /* =========================================================
+   4. CARD PRINCIPAL
+   Estrutura geral da tela de login
+   ========================================================= */
+  .login-card{
+    position:relative;
+    width: 100%;
+    max-width: 980px;
+    min-height: 560px;
+    background: var(--branco);
+    border-radius: var(--radius-card);
+    box-shadow: var(--sombra-card);
+    display: flex;
+    overflow:hidden;
+    z-index: 2;
+  }
+
+  /* =========================================================
+   5. PAINEL DA MARCA
+   Lado esquerdo do login
+   ========================================================= */
+  .brand-panel{
+    flex: 1;
+    background: var(--gradiente-brand);
+    position: relative;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding: 40px;
+    overflow:hidden;
+  }
+
+  /* Formas decorativas do painel */
+  .brand-blob-top{
+    position:absolute;
+    top:-40px; left:-60px;
+    width: 220px; height:220px;
+    background: var(--rosa-medio);
+    border-radius: 50%;
+    opacity:0.6;
+  }
+
+  .brand-blob-bottom{
+    position:absolute;
+    bottom:-60px; left:-40px;
+    width: 260px; height:180px;
+    background: var(--rosa-medio);
+    border-radius: 50%;
+    opacity:0.6;
+  }
+
+  /* Logo principal */
+
+  .cupcake-icon{
+    width: 130px;
+    height: 130px;
+    margin-bottom: 8px;
+    filter: var(--sombra-cupcake);
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Nome da marca */
+
+  .brand-title{
+    font-family: var(--fonte-marca);
+    color: var(--marrom);
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 40px;
+    position: relative;
+    
+  }
+
+  /* Subtítulo da marca */
+
+  .brand-sub{
+    font-family: var(--fonte-subtitulo);
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    color: var(--marrom);
+    font-size: 20px;
+    text-align: center;
+    margin-top: 15px;
+  }
+
+  /* Linha decorativa */
+
+  .divider-line{
+    display:flex;
+    align-items:center;
+    gap: 12px;
+    margin-top: 18px;
+    width: 60%;
+    position: relative;
+    z-index: 2;
+  }
+  .divider-line span:first-child,
+  .divider-line span:last-child{
+    flex:1;
+    height:1px;
+    background: var(--rosa-medio);
+  }
+  .divider-line .heart-mini{
+    color: var(--rosa-vinho);
+    font-size: 0.9rem;
+  }
+
+  /* =========================================================
+   6. PAINEL DO FORMULÁRIO
+   Lado direito do login
+   ========================================================= */
+  .form-panel{
+    flex: 1;
+    background: var(--rosa-fundo);
+    padding: 48px 56px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    position: relative;
+    border-radius: 0 30px 30px 0; /*===nao esta funcionando*/
+  }
+
+  /* Logo pequena do formulário */
+
+  .cupcake-icon-small{
+    width: 78px;
+    height: 78px;
+    margin: 0 auto 4px;
+    display:block;
+  }
+
+  /* Título "Bem-vindo!" */
+
+  .welcome-title{
+     font-family: var(--fonte-titulo);
+  font-size: var(--titulo-desktop);      
+  font-weight: 500;       
+  color: var(--marrom-escuro);         
+  line-height: 1.1;       
+  margin-bottom: 10px;
+  text-align: center;
+  }
+
+  /* Texto abaixo do título */
+
+  .welcome-sub{
+    font-size:16px; 
+    line-height:1.7; 
+    color: var(--marrom); 
+    opacity:.85; 
+    margin-bottom:26px;
+    text-align: center;
+  }
+
+  .form-divider {
+    width: 55%;
+    margin: 0 auto 22px;
+}
+
+/* =========================================================
+   7. CAMPOS DO FORMULÁRIO
+   E-mail e senha
+   ========================================================= */
+
+  .input-group{
+    position:relative;
+    margin-bottom: 16px;
+  }
+
+  .input-group input{
+   width: 100%;
+    padding: 15px 44px;
+    border-radius: var(--radius-pill);
+    border: var(--borda-input);
+    background: var(--branco);
+    font-family: var(--fonte-principal);
+    font-size: var(--texto-normal);
+    color: var(--rosa-escuro);
+    outline: none;
+    transition: border-color .2s;
+  }
+
+  .input-group input::placeholder{
+    color: var(--placeholder);
+  }
+
+  .input-group input:focus{
+    border-color: var(--rosa-vinho
+    );
+  }
+  .input-group .icon-left{
+    position:absolute;
+    left:15px; top:50%;
+    transform:translateY(-50%);
+    color:var(--rosa-vinho);
+    display:flex;
+  }
+   
+ .toggle-eye {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    cursor: pointer;
+
+    color: var(--rosa-vinho);
+
+    font-size: var(--texto-medio);
+
+    background: none;
+    border: none;
+
+    padding: 4px;
+
+    border-radius: 50%;
+
+    transition:
+        background var(--transicao),
+        color var(--transicao);
+}
+
+.toggle-eye:hover {
+    background: var(--rosa-hover);
+    color: var(--rosa-escuro);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* =========================================================
+   8. OPÇÕES DO FORMULÁRIO
+   Lembrar-me e Esqueceu a senha
+   ========================================================= */
+
+  .row-options{
+    display: flex;
+    align-items:center;
+    justify-content:space-between;
+    font-size: var(--texto-pequeno);
+    margin-bottom: 20px;
+    color: var(--texto-claro);
+  }
+
+  .remember{
+    display: flex;
+    align-items:center;
+    gap: 6px;
+  }
+
+  .remember input[type="checkbox"]{
+    width: 16px;
+    height: 16px;
+    accent-color: var(--rosa-vinho);
+  }
+
+  .forgot-link {
+    color: var(--rosa-vinho);
+    text-decoration: none;
+    font-weight: 500;
+
+    transition:
+        color var(--transicao),
+        opacity var(--transicao);
+}
+
+.forgot-link:hover {
+    color: var(--rosa-vinho-hover);
+    text-decoration: underline;
+}
+
+/* =========================================================
+   9. BOTÃO PRINCIPAL
+   ========================================================= */
+
+ .btn-entrar {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: var(--radius-pill);
+
+    background: var(--rosa-vinho);
+    color: var(--branco);
+
+    font-family: var(--fonte-principal);
+    font-size: var(--texto-medio);
+    font-weight: 600;
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    box-shadow: var(--sombra-botao);
+
+    transition:
+        background var(--transicao),
+        transform var(--transicao-rapida),
+        box-shadow var(--transicao);
+}
+
+.btn-entrar:hover {
+    background: var(--rosa-vinho-hover);
+    box-shadow: var(--sombra-botao-hover);
+}
+
+.btn-entrar:active {
+    transform: translateY(0);
+}
+
+/* =========================================================
+   10. LOGIN SOCIAL
+   Google, Facebook e Email
+   ========================================================= */
+
+  .or-divider{
+    display:flex;
+    align-items:center;
+    gap: 12px;
+    margin: 22px 0;
+    color: var(--texto-claro);
+    font-size: var(--texto-pequeno);
+  }
+  .or-divider span:first-child,
+  .or-divider span:last-child{
+    flex:1;
+    height:1px;
+    background: var(--rosa-medio);
+  }
+
+  .social-row{
+    display:flex;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+ .btn-social {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    padding: 13px;
+
+    border-radius: var(--radius-pill);
+    border: var(--borda-input);
+
+    background: var(--branco);
+    color: var(--rosa-escuro);
+
+    font-family: var(--fonte-principal);
+    font-size: var(--texto-pequeno);
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition:
+        background var(--transicao),
+        border-color var(--transicao),
+        transform var(--transicao-rapida),
+        box-shadow var(--transicao);
+}
+
+.btn-social:hover {
+    background: var(--rosa-hover);
+    border-color: var(--rosa-vinho);
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 6px 15px rgba(122, 46, 58, 0.08);
+}
+
+ 
+
+  /* =========================================================
+   12. CRIAÇÃO DE CONTA
+   ========================================================= */
+
+  .signup-text{
+    text-align:center;
+    font-size: 0.9rem;
+    color: var(--texto-claro);
+  }
+  .signup-text a{
+    color: var(--rosa-vinho);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .signup-text a:hover{ text-decoration: underline; }
+
+  /* corações decorativos posicionados */
+  .heart-tl{ top: 24%; left: 6%; font-size: 1.6rem; transform: rotate(-10deg); }
+  .heart-tr{ top: 6%; right: 4%; font-size: 2rem; }
+  .heart-bl{ bottom: 8%; left: 3%; font-size: 1.8rem; }
+  .heart-br{ bottom: 5%; right: 4%; font-size: 1.6rem; }
+
+  /* =========================================================
+   13. RESPONSIVIDADE — TABLET / CELULAR
+   ========================================================= */
+
+  @media (max-width: 768px){
+    body{ padding: 16px; }
+
+    .choco-drip{ display:none; }
+
+    .login-card{
+      flex-direction: column;
+      max-width: 420px;
+      min-height: auto;
+      border-radius: var(--radius-card-mobile);
+      box-shadow: var(--sombra-card-mobile);
+    }
+
+    /* no mobile, esconde o painel da marca (como no print 2) */
+    .brand-panel{ display:none; }
+
+    .form-panel{
+      padding: 40px 26px 34px;
+      background: var(--rosa-fundo);
+    }
+
+    /* Aumenta logo no celular */
+
+    .cupcake-icon-small{
+        width: 160px;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto 25px;
+    
+    }
+
+    /* Diminui título */
+
+    .welcome-title{ font-size: var(--titulo-mobile); }
+
+     /* Ajusta corações */
+
+    .heart-tl{ top: 14%; left: 5%; font-size: 1.4rem; }
+    .heart-tr{ top: 10%; right: 6%; font-size: 1.6rem; }
+    .heart-bl{ display:none; }
+    .heart-br{ bottom: 4%; right: 6%; font-size: 1.4rem; }
+
+    .social-row{ flex-direction: column; }
+  }
+
+  /* =========================================================
+   14. RESPONSIVIDADE — CELULARES PEQUENOS
+   ========================================================= */
+
+  @media (max-width: 380px){
+    .form-panel{ padding: 34px 18px 28px; }
+    .cupcake-icon-small {width: 140px;}
+    .welcome-title{ font-size: 2.1rem; }
+  }

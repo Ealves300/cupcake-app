@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doce Encanto | Confeitaria Artesanal</title>
+    <link rel="icon" href="imagens/icon2.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/catalogo.css">
+    </head>
+
+    <body>
+
+        <div class="petals" id="petals"></div>
+        <div class="header-hero-container">
+            <header class="site-header" id="siteHeader">
+                <div class="header-inner">
+                    <img src="imagens/icon.png" alt="Doce Encanto" class="header-logo">
+                    <span class="brand-text">
+                        <span class="n1">DOCE ENCANTO</span><br>
+                        <span class="n2">Confeitaria artesanal</span>
+                    </span>
+
+                    <nav class="header-nav">
+                        <a href="#cupcakes">Cupcakes</a>
+                        <a href="#sobre">Sobre</a>
+                        <a href="#encomendar">Encomendar</a>  
+                    </nav>
+
+                    <button class="cart-btn" id="cartBtn" aria-label="Ver sacola">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 8h12l-1 12H7L6 8Z"/><path d="M9 8a3 3 0 0 1 6 0"/></svg>
+                        <span class="cart-count" id="cartCount">0</span>
+                    </button>
+                </div>
+            </header>
+
+            <section class="hero">
+                <div class="hero-ribbon"></div>
+                <div class="hero-content">
+                    <h3>Doçura que <br> transforma <br> momentos.</h3>
+                    <span class="hero-divider">♥</span>
+                    <p class="hero-tagline">Cupcakes artesanais feitos com receitas <br> próprias e ingredientes selecionados.</p>
+                    <a href="#cupcakes" class="hero-cta">Ver cardápio</a>
+                </div>
+            </section>
+
+        </div>
+
+        <section class="about" id="sobre">
+
+            <div class="about-image">
+                <img src="imagens/logo_quadrado.png" alt="Cupcake artesanal">
+            </div>
+
+            <div class="about-text">
+                <span class="about-label">CONFEITARIA ARTESANAL</span>
+                <h2>Onde cada sabor vira uma experiência.</h2>
+                <p>
+                    Na Doce Encanto, acreditamos que os melhores momentos também têm sabor.
+                    Cada receita nasce da combinação de ingredientes escolhidos com cuidado,
+                    sabores que despertam a curiosidade e um toque artesanal em cada detalhe.
+                </p>
+                <p>
+                    Do primeiro olhar ao último pedacinho, queremos transformar doces em
+                    experiências que surpreendem, encantam e deixam vontade de provar mais.
+                </p>
+                <strong>
+                    Descubra um novo sabor para o seu próximo momento especial.
+                </strong>
+
+                <div class="about-social">
+                    <a href="#" aria-label="Instagram">
+                        <i class="fa-brands fa-instagram"></i>
+                        <img src="imagens/icones/intagram.ico" alt="">
+                    </a>
+
+                    <a href="#" aria-label="Facebook">
+                        <i class="fa-brands fa-facebook-f"></i>
+                        <img src="imagens/icones/face.ico" alt="">
+                    </a>
+
+                    <a href="#" aria-label="WhatsApp">
+                        <i class="fa-brands fa-whatsapp"></i>
+                        <img src="imagens/icones/whats.ico" alt="">
+                    </a>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="catalog" id="cupcakes">
+            <div class="section-heading">
+                <span class="ornament">⟨ ❤ ⟩</span>
+                <h2>Nossos cupcakes</h2>
+                <p>Escolha seu sabor favorito e monte sua caixinha de encantos</p>
+            </div>
+
+            <div class="filters" id="filters"></div>
+            <div class="grid" id="grid"></div>
+        </section>
+
+        <section class="order" id="encomendar">
+            <div class="order-inner">
+                <span class="ornament">⟨ ❤ ⟩</span>
+                <h2>Monte sua caixinha</h2>
+                <p class="order-sub">Adicione os sabores que quiser ao carrinho e finalize pelo Carrinho</p>
+                <div class="order-summary" id="orderSummary"></div>
+                <button class="order-cta" id="orderCta">Finalizar pedido</button>
+            </div>
+        </section>
+
+        <footer class="site-footer">
+            <img src="imagens/icon.png" alt="Doce Encanto" class="footer-logo">
+            <p>Doce Encanto — Confeitaria artesanal</p>
+            <p class="footer-fine">Feito com <span class="heart">♥</span> para quem ama um docinho de verdade</p>
+            <a href="administrativo.html" class="footer-admin-link">Área da equipe</a>
+        </footer>
+
+        
+        <script src="js/catalogo.js"></script>
+    </body>
+</html>

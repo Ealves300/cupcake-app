@@ -1,0 +1,568 @@
+/* =========================================================
+  VARIÁVEIS GLOBAIS
+   ========================================================= */
+
+:root{
+     /* ---------- Cores principais ---------- */
+
+    --rosa-escuro: #7a2e3a;
+    --rosa-vinho: #a13a52;
+    --rosa-vinho-hover: #8a2f44;
+
+    --rosa-claro: #ffd9e3;
+    --rosa-medio: #f8b8c8;
+    --rosa-fundo: #fff0f3;
+    --rosa-hover: #ffeef2;
+
+    /* ---------- Textos ---------- */
+
+    --marrom: #4a2e2b;
+    --marrom-escuro: #4a2828;
+
+    --texto-claro: #a97a86;
+    --placeholder: #c99aa6;
+
+    /* ---------- Fundo ---------- */
+
+    --branco: #fffaf9;
+
+    /* ---------- Gradientes ---------- */
+
+    --gradiente-body:
+        linear-gradient(
+            160deg,
+            #f6a8bd 0%,
+            #f7c7d3 45%,
+            #fbdde6 100%
+        );
+
+    --gradiente-brand:
+        linear-gradient(
+            160deg,
+            var(--rosa-claro),
+            var(--rosa-hover) 70%
+        );
+
+    /* ---------- Sombras ---------- */
+
+    --sombra-card:
+        0 30px 60px rgba(122, 46, 58, 0.25);
+
+    --sombra-card-mobile:
+        0 20px 40px rgba(122, 46, 58, 0.30);
+
+    --sombra-cupcake:
+        0 6px 10px rgba(122, 46, 58, 0.15);
+
+    --sombra-botao:
+        0 10px 20px rgba(161, 58, 82, 0.30);
+
+    /* ---------- Bordas ---------- */
+
+    --borda-input: 1.5px solid var(--rosa-medio);
+
+    /* ---------- Bordas arredondadas ---------- */
+
+    --radius-card: 32px;
+    --radius-card-mobile: 26px;
+    --radius-pill: 30px;
+
+    /* ---------- Transições ---------- */
+
+    --transicao: 0.2s ease;
+    --transicao-rapida: 0.15s ease;
+
+    /* ---------- Fontes ---------- */
+  
+  --fonte-principal: 'Poppins', sans-serif;
+  --fonte-marca: 'Cinzel', serif;
+  --fonte-subtitulo: 'Montserrat', sans-serif;
+  --fonte-titulo: 'Playfair Display', Georgia, serif;
+
+  /* ---------- Tamanhos de fonte ---------- */
+
+--texto-pequeno: 0.85rem;
+--texto-normal: 0.95rem;
+--texto-medio: 1rem;
+--titulo-mobile: 2.4rem;
+--titulo-desktop: 3.5rem;
+  }
+
+  /* =========================================================
+   RESET E CONFIGURAÇÕES GERAIS
+   ========================================================= */
+ *{ margin:0; padding:0; box-sizing:border-box; }
+
+  body{
+    font-family: var(--fonte-principal);
+    min-height: 100vh;
+    display: flex;
+    align-items:center;
+    justify-content:center;
+    background:
+    radial-gradient(
+        circle at 15% 20%,
+        rgba(255, 255, 255, 0.35),
+        transparent 40%
+    ),
+    radial-gradient(
+        circle at 85% 80%,
+        rgba(255, 255, 255, 0.25),
+        transparent 40%
+    ),
+    var(--gradiente-body);
+    padding: 24px;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* =========================================================
+   ELEMENTOS DECORATIVOS
+   Corações e Gota de chocolate
+   ========================================================= */
+  .choco-drip{
+    position:absolute;
+    top:0; left:0;
+    width: 260px;
+    height: 90px;
+    pointer-events:none;
+    z-index: 5;
+  }
+
+  .heart-deco{
+    position:absolute;
+    color: var(--rosa-vinho);
+    opacity:0.55;
+  }
+
+   /* =========================================================
+   CARD PRINCIPAL
+   Estrutura geral da tela de login
+   ========================================================= */
+  .auth-card{
+    position:relative;
+    width: 100%;
+    max-width: 980px;
+    min-height: 560px;
+    background: var(--branco);
+    border-radius: var(--radius-card);
+    box-shadow: var(--sombra-card);
+    display: flex;
+    overflow:hidden;
+    z-index: 2;
+  }
+
+  /* =========================================================
+   PAINEL DA MARCA
+   Lado esquerdo do login
+   ========================================================= */
+   .brand-panel{
+    flex: 1;
+    background: var(--gradiente-brand);
+    position: relative;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding: 40px;
+    overflow:hidden;
+  }
+
+  .brand-blob-top{
+    position:absolute;
+    top:-40px; left:-60px;
+    width: 220px; height:220px;
+    background: var(--rosa-medio);
+    border-radius: 50%;
+    opacity:0.6;
+  }
+
+  .brand-blob-bottom{
+    position:absolute;
+    bottom:-60px; left:-40px;
+    width: 260px; height:180px;
+    background: var(--rosa-medio);
+    border-radius: 50%;
+    opacity:0.6;
+  }
+
+   /* Logo principal */
+
+  .cupcake-icon{
+    width: 130px;
+    height: 130px;
+    margin-bottom: 8px;
+    filter: var(--sombra-cupcake);
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Nome da marca */
+
+  .brand-title{
+    font-family: var(--fonte-marca);
+    color: var(--marrom);
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 40px;
+    position: relative;
+    
+  }
+
+ /* Subtítulo da marca */
+
+  .brand-sub{
+    font-family: var(--fonte-subtitulo);
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    color: var(--marrom);
+    font-size: 20px;
+    text-align: center;
+    margin-top: 15px;
+  }
+
+  /* Linha decorativa */
+
+  .divider-line{
+    display:flex;
+    align-items:center;
+    gap: 12px;
+    margin-top: 18px;
+    width: 60%;
+    position: relative;
+    z-index: 2;
+  }
+  .divider-line span:first-child,
+  .divider-line span:last-child{
+    flex:1;
+    height:1px;
+    background: var(--rosa-medio);
+  }
+  .divider-line .heart-mini{
+    color: var(--rosa-vinho);
+    font-size: 0.9rem;
+  }
+  /* =========================================================
+   PAINEL DO FORMULÁRIO
+   Lado direito do login
+   ========================================================= */
+  .form-panel{
+    flex: 1;
+    background: var(--rosa-fundo);
+    padding: 48px 56px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    position: relative;
+  }
+
+  /* Logo pequena do formulário */
+
+  .cupcake-icon-small{
+    width: 78px;
+    height: 78px;
+    margin: 0 auto 4px;
+    display:block;
+  }
+
+  /* Título "Bem-vindo!" */
+
+  .welcome-title{
+     font-family: var(--fonte-titulo);
+  font-size: var(--titulo-desktop);      
+  font-weight: 500;       
+  color: var(--marrom-escuro);         
+  line-height: 1.1;       
+  margin-bottom: 10px;
+  text-align: center;
+  }
+
+ /* Texto abaixo do título */
+
+  .welcome-sub{
+    font-size:16px; 
+    line-height:1.7; 
+    color: var(--marrom); 
+    opacity:.85; 
+    margin-bottom:26px;
+    text-align: center;
+  }
+
+  .form-divider {
+  margin: 0 auto 22px;
+  width: 55%;
+}
+/* =========================================================
+   CAMPOS DO FORMULÁRIO
+   Lado direito do login
+   ========================================================= */
+
+  .field{
+    position:relative;
+    margin-bottom: 16px;
+  }
+  .field input{
+    width: 100%;
+    padding: 15px 44px;
+    border-radius: var(--radius-pill);
+    border: var(--borda-input);
+    background: var(--branco);
+    font-family: var(--fonte-principal);
+    font-size: 0.95rem;
+    color: var(--rosa-escuro);
+    outline: none;
+    transition: border-color var(--transicao);
+  }
+  .field input::placeholder{
+    color:var(--placeholder);
+  }
+
+  .field input:focus{
+    border-color:var(--rosa-vinho);
+  }
+  .field input.invalid{
+    border-color:var(--rosa-vinho);
+  }
+  .field .icon-left{
+    position:absolute;
+    left:15px; top:50%;
+    transform:translateY(-50%);
+    color:var(--rosa-vinho);
+    display:flex;
+  }
+  .field .icon-right{
+    position:absolute;
+    right:14px; top:50%;
+    transform:translateY(-50%);
+    color:var(--rosa-vinho-hover);
+    cursor:pointer;
+    display:flex;
+    background:none;
+    border:none;
+    padding:4px;
+  }
+  .field-msg{
+    font-size:.74rem;
+    color:var(--rosa-vinho);
+    min-height:14px;
+    margin-top:2px;
+    padding-left:4px;
+  }
+  .field-msg.ok{
+    color:var(--texto-claro);}
+ 
+  .input-icon{
+    position:absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--rosa-vinho);
+    font-size: 1rem;
+  }
+/* =========================================================
+   TERMOS
+   ========================================================= */
+  .terms{
+    display:flex;
+    align-items:flex-start;
+    gap:8px;
+    font-size:.8rem;
+    color:var(--marrom);
+    margin-top:2px;
+  }
+  .terms input{
+    margin-top:2px;
+    accent-color:var(--rosa-vinho);
+    width:15px; height:15px;
+    cursor:pointer;
+  }
+  .terms a{color:var(--rosa-vinho); 
+    text-decoration:underline; 
+    font-weight:500;}
+
+    /* =========================================================
+   BOTÃO PRINCIPAL
+   ========================================================= */
+ 
+  .btn-submit{
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: var(--radius-pill);
+    background: var(--rosa-vinho);
+    color: var(--branco);
+    font-family: var(--fonte-principal);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap: 8px;
+    transition: background var(--transicao), transform var(--transicao-rapida);
+    box-shadow: var(--sombra-botao);
+  }
+  
+  .btn-submit:hover{
+    transform:translateY(-1px); 
+    box-shadow:0 14px 26px -8px rgba(122,32,57,.6);
+  }
+
+  .btn-submit:active{
+    transform:translateY(0);
+  }
+
+  .btn-submit:disabled{
+    opacity:.55; 
+    cursor:not-allowed; 
+    transform:none;
+  }
+  /* =========================================================
+   DIVISORES / LINKS
+   ========================================================= */
+ 
+  .or-divider{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    color:var(--marrom);
+    font-size:.78rem;
+    margin:16px 0 6px;
+  }
+  .or-divider::before,.or-divider::after{
+    content:'';
+    flex:1;
+    height:1px;
+    background:var(--rosa-vinho);
+  }
+ 
+  .login-link{
+    text-align:center;
+    font-size:.85rem;
+    color:var(--marrom);
+  }
+  .login-link a{
+    color:var(--rosa-vinho); 
+    font-weight:600; 
+    text-decoration:none;
+  }
+
+  .login-link a:hover{
+    text-decoration:underline;
+  }
+ 
+  /* =========================================================
+   OVERLAY DE SUCESSO
+   ========================================================= */
+  .success-overlay{
+    position:fixed; inset:0;
+    background:rgba(74,36,24,.55);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:50;
+    padding:20px;
+  }
+
+  .success-overlay.show{
+    display:flex;
+  }
+
+  .success-card{
+    background:var(--rosa-medio);
+    border-radius:20px;
+    padding:36px 32px;
+    max-width:340px;
+    text-align:center;
+    box-shadow:0 30px 60px rgba(0,0,0,.4);
+  }
+
+  .success-card .emoji{
+    font-size:2.6rem; 
+    margin-bottom:8px;
+  }
+
+  .success-card h2{
+    font-family:'Playfair Display',serif;
+    font-style:italic;
+    color:var(--rosa-vinho);
+    margin:0 0 8px;
+  }
+  .success-card p{
+    color:var(--marrom); 
+    font-size:.88rem; 
+    margin:0 0 20px; 
+    line-height:1.5;
+  }
+
+  .success-card button{
+    border:none; 
+    background:var(--rosa-vinho); 
+    color:var(--branco);
+    padding:10px 22px; 
+    border-radius:12px; 
+    font-weight:600; 
+    cursor:pointer;
+    font-family:var(--fonte-principal);
+  }
+ 
+   /* =========================================================
+   RESPONSIVIDADE — TABLET / CELULAR
+   ========================================================= */
+
+  @media (max-width: 768px){
+    body{ padding: 16px; }
+
+    .choco-drip{ display:none; }
+
+    .auth-card{
+      flex-direction: column;
+      max-width: 420px;
+      min-height: auto;
+      border-radius: var(--radius-card-mobile);
+      box-shadow: var(--sombra-card-mobile);
+    }
+
+    /* no mobile, esconde o painel da marca (como no print 2) */
+    .brand-panel{ display:none; }
+
+    .form-panel{
+      padding: 40px 26px 34px;
+      background: var(--rosa-fundo);
+    }
+
+    /* Aumenta logo no celular */
+
+    .cupcake-icon-small{
+        width: 160px;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto 25px;
+    
+    }
+
+    /* Diminui título */
+
+    .welcome-title{ font-size: var(--titulo-mobile); }
+
+     /* Ajusta corações */
+
+    .heart-tl{ top: 14%; left: 5%; font-size: 1.4rem; }
+    .heart-tr{ top: 10%; right: 6%; font-size: 1.6rem; }
+    .heart-bl{ display:none; }
+    .heart-br{ bottom: 4%; right: 6%; font-size: 1.4rem; }
+
+    .social-row{ flex-direction: column; }
+  }
+
+  /* =========================================================
+   RESPONSIVIDADE — CELULARES PEQUENOS
+   ========================================================= */
+
+  @media (max-width: 380px){
+    .form-panel{ padding: 34px 18px 28px; }
+    .cupcake-icon-small {width: 140px;}
+    .welcome-title{ font-size: 2.1rem; }
+  }

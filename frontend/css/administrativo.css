@@ -1,0 +1,836 @@
+/* =========================================================
+   1. VARIÁVEIS / PALETA DE CORES
+========================================================= */
+
+:root {
+
+    /* ---------- Cores principais ---------- */
+
+    --rosa-escuro: #7a2e3a;
+    --rosa-vinho: #a13a52;
+    --rosa-vinho-hover: #8a2f44;
+
+    --rosa-claro: #ffd9e3;
+    --rosa-medio: #f8b8c8;
+    --rosa-fundo: #fff0f3;
+
+    /* ---------- Textos ---------- */
+
+    --marrom: #4a2e2b;
+    --marrom-escuro: #4a2828;
+
+    --texto-claro: #a97a86;
+    --placeholder: #c99aa6;
+
+    /* ---------- Fundo ---------- */
+
+    --branco: #fffaf9;
+
+    /* ---------- Bordas ---------- */
+
+    --border: #f3d9e0;
+
+    /* ---------- Gradientes ---------- */
+
+    --gradiente-body:
+        linear-gradient(
+            160deg,
+            #f6a8bd 0%,
+            #f7c7d3 45%,
+            #fbdde6 100%
+        );
+
+    --gradiente-brand:
+        linear-gradient(
+            160deg,
+            var(--rosa-claro),
+            #ffeef2 70%
+        );
+
+    /* ---------- Sombras ---------- */
+
+    --sombra-card:
+        0 30px 60px rgba(122, 46, 58, 0.25);
+
+    --sombra-card-mobile:
+        0 20px 40px rgba(122, 46, 58, 0.30);
+
+    --sombra-cupcake:
+        0 6px 10px rgba(122, 46, 58, 0.15);
+
+    --sombra-botao:
+        0 10px 20px rgba(161, 58, 82, 0.30);
+
+    /* ---------- Bordas ---------- */
+
+    --borda-input: 1.5px solid var(--rosa-medio);
+
+    /* ---------- Bordas arredondadas ---------- */
+
+    --radius-card: 32px;
+    --radius-card-mobile: 26px;
+    --radius-pill: 30px;
+
+    /* ---------- Transições ---------- */
+
+    --transicao: 0.2s ease;
+    --transicao-rapida: 0.15s ease;
+
+    /* ---------- Fontes ---------- */
+
+  --fonte-principal: 'Poppins', sans-serif;
+  --fonte-marca: 'Cinzel', serif;
+  --fonte-subtitulo: 'Montserrat', sans-serif;
+  --fonte-titulo: 'Playfair Display', Georgia, serif;
+
+  /* ---------- Tamanhos de fonte ---------- */
+
+--texto-pequeno: 0.85rem;
+--texto-normal: 0.95rem;
+--texto-medio: 1rem;
+--titulo-mobile: 2.4rem;
+--titulo-desktop: 3.5rem;
+}
+
+/* =========================================================
+   02. RESET E CONFIGURAÇÕES GERAIS
+   ========================================================= */
+*{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; background: var(--rosa-fundo); font-family:'Quicksand', sans-serif; color: var(--marrom-escuro); }
+  h1,h2,h3,.serif{ font-family:'Playfair Display', serif; }
+  button{ font-family:var(--fonte-principal) }
+  ::-webkit-scrollbar{ width:8px; height:8px; }
+  ::-webkit-scrollbar-thumb{ background: var(--rosa-medio); border-radius:8px; }
+
+  /* Foco visível para navegação por teclado */
+  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible{
+    outline: 2.5px solid var(--rosa-vinho);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+  }
+
+
+  /* ---------------- LOGIN ---------------- */
+  #loginScreen {
+  min-height: 100vh;
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 30px 20px;
+
+  background: var(--gradiente-body);
+
+  font-family: var(--fonte-principal);
+}
+
+
+/* =========================================================
+   CARD
+   ========================================================= */
+
+.login-card {
+  width: 100%;
+  max-width: 440px;
+
+  padding: 42px 40px 36px;
+
+  background: rgba(255, 250, 249, 0.96);
+
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: var(--radius-card);
+
+  box-shadow: var(--sombra-card);
+
+  text-align: center;
+
+  animation: loginEntrada 0.5s ease;
+}
+
+
+/* =========================================================
+   LOGO / ÍCONE
+   ========================================================= */
+
+.mark {
+  width: 76px;
+  height: 76px;
+
+  margin: 0 auto 22px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: var(--rosa-claro);
+
+  border-radius: 50%;
+
+  box-shadow: var(--sombra-cupcake);
+}
+
+.mark img {
+  width: 48px;
+  height: 48px;
+
+  object-fit: contain;
+
+  display: block;
+}
+
+
+/* =========================================================
+   TÍTULO
+   ========================================================= */
+
+.login-card h1 {
+  margin: 0;
+
+  color: var(--rosa-escuro);
+
+  font-family: var(--fonte-titulo);
+  font-size: 2rem;
+  font-weight: 600;
+
+  line-height: 1.2;
+}
+
+
+/* =========================================================
+   SUBTÍTULO
+   ========================================================= */
+
+.login-card > p:not(.login-error):not(.login-hint) {
+  margin: 10px 0 30px;
+
+  color: var(--texto-claro);
+
+  font-size: var(--texto-normal);
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   FORMULÁRIO
+   ========================================================= */
+
+#loginForm {
+  width: 100%;
+
+  text-align: left;
+}
+
+
+/* =========================================================
+   CAMPO
+   ========================================================= */
+
+.login-field {
+  margin-bottom: 18px;
+}
+
+.login-field label {
+  display: block;
+
+  margin: 0 0 8px 6px;
+
+  color: var(--marrom-escuro);
+
+  font-size: var(--texto-pequeno);
+  font-weight: 600;
+}
+
+
+.login-field input {
+  width: 100%;
+  height: 52px;
+
+  padding: 0 18px;
+
+  border: var(--borda-input);
+  border-radius: var(--radius-pill);
+
+  outline: none;
+
+  background: var(--branco);
+
+  color: var(--marrom);
+
+  font-family: var(--fonte-principal);
+  font-size: var(--texto-normal);
+
+  transition:
+    border-color var(--transicao),
+    box-shadow var(--transicao),
+    background var(--transicao);
+}
+
+
+/* =========================================================
+   PLACEHOLDER
+   ========================================================= */
+
+.login-field input::placeholder {
+  color: var(--placeholder);
+}
+
+
+/* =========================================================
+   FOCO NO INPUT
+   ========================================================= */
+
+.login-field input:focus {
+  border-color: var(--rosa-vinho);
+
+  background: var(--branco);
+
+  box-shadow:
+    0 0 0 4px rgba(161, 58, 82, 0.10);
+}
+
+
+/* =========================================================
+   MENSAGEM DE ERRO
+   ========================================================= */
+
+.login-error {
+  display: none;
+
+  margin: 0 6px 16px;
+
+  color: var(--rosa-vinho);
+
+  font-size: var(--texto-pequeno);
+  font-weight: 500;
+
+  line-height: 1.5;
+}
+
+
+/*
+   Quando o JavaScript adicionar a classe "show",
+   a mensagem aparece.
+*/
+
+.login-error.show {
+  display: block;
+}
+
+
+/* =========================================================
+   BOTÃO
+   ========================================================= */
+
+.login-btn {
+  width: 100%;
+  height: 52px;
+
+  border: none;
+  border-radius: var(--radius-pill);
+
+  background: var(--rosa-vinho);
+
+  color: var(--branco);
+
+  font-family: var(--fonte-principal);
+  font-size: var(--texto-normal);
+  font-weight: 600;
+
+  cursor: pointer;
+
+  box-shadow: var(--sombra-botao);
+
+  transition:
+    background var(--transicao),
+    transform var(--transicao),
+    box-shadow var(--transicao);
+}
+
+
+/* =========================================================
+   HOVER
+   ========================================================= */
+
+.login-btn:hover {
+  background: var(--rosa-vinho-hover);
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 13px 24px rgba(161, 58, 82, 0.35);
+}
+
+
+/* =========================================================
+   CLIQUE
+   ========================================================= */
+
+.login-btn:active {
+  transform: translateY(0);
+
+  box-shadow:
+    0 7px 14px rgba(161, 58, 82, 0.25);
+}
+
+
+/* =========================================================
+   TEXTO INFORMATIVO
+   ========================================================= */
+
+.login-hint {
+  margin: 25px 0 0;
+
+  color: var(--texto-claro);
+
+  font-size: 0.75rem;
+  line-height: 1.7;
+
+  opacity: 0.85;
+}
+
+
+/* =========================================================
+   ANIMAÇÃO
+   ========================================================= */
+
+@keyframes loginEntrada {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* =========================================================
+   RESPONSIVIDADE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  #loginScreen {
+    padding: 20px 16px;
+  }
+
+  .login-card {
+    max-width: 400px;
+
+    padding: 34px 24px 30px;
+
+    border-radius: var(--radius-card-mobile);
+  }
+
+  .mark {
+    width: 68px;
+    height: 68px;
+
+    margin-bottom: 18px;
+  }
+
+  .mark img {
+    width: 43px;
+    height: 43px;
+  }
+
+  .login-card h1 {
+    font-size: 1.75rem;
+  }
+
+  .login-card > p:not(.login-error):not(.login-hint) {
+    margin-bottom: 26px;
+  }
+
+  .login-field input,
+  .login-btn {
+    height: 50px;
+  }
+}
+
+
+/* =========================================================
+   TELAS MUITO PEQUENAS
+   ========================================================= */
+
+@media (max-width: 360px) {
+
+  .login-card {
+    padding: 30px 20px 26px;
+  }
+
+  .login-card h1 {
+    font-size: 1.6rem;
+  }
+
+  .login-card > p:not(.login-error):not(.login-hint) {
+    font-size: 0.82rem;
+  }
+}
+  /* ---------------- APP LAYOUT ---------------- */
+  #app{ display:none; min-height:100vh; }
+  #app.show{ display:flex; }
+
+  .sidebar{
+    width:240px; 
+    flex-shrink:0;
+    background: var(--gradiente-brand);
+    color:var(--marrom);
+    display:flex; flex-direction:column;
+    padding: 28px 18px;
+    position:sticky; top:0; height:100vh;
+  }
+  .sidebar-brand{ 
+    display:flex; 
+    align-items:center; 
+    gap:10px; 
+    padding: 0 6px 26px; 
+  }
+
+  .sidebar-brand .mark{
+    width:38px; 
+    height:38px; 
+    border-radius:50%; 
+    background:rgba(255,255,255,.5);
+    display:flex; 
+    align-items:center; 
+    justify-content:center; 
+    font-size:18px; 
+    flex-shrink:0;
+  }
+  .sidebar-brand .txt{ line-height:1.15; }
+  .sidebar-brand .n1{ 
+    color: var(--rosa-escuro);
+  font-family: var(--fonte-marca);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase; 
+}
+
+  .sidebar-brand .n2{color: var(--marrom);
+  font-family: var(--fonte-subtitulo);
+  font-size: 12px;
+  font-weight: 300;
+  letter-spacing: 0.25em;
+  text-transform: lowercase; 
+}
+
+  .nav-group{ display:flex; flex-direction:column; gap:4px; flex:1; }
+  .nav-btn{
+    display:flex; 
+    align-items:center; 
+    gap:11px;
+    border:none; 
+    background:transparent; 
+    color:var(--marrom); 
+    cursor:pointer;
+    padding:11px 14px; 
+    border-radius: var(--radius-pill); 
+    font-size:13.5px; font-weight:600;
+    text-align:left; 
+    transition: background .2s ease, color .2s ease;
+  }
+  .nav-btn .ico{ font-size:16px; width:20px; text-align:center; }
+  .nav-btn:hover{ background: rgba(122,46,58,.08); color: var(--rosa-escuro); }
+  .nav-btn.active{
+     background: var(--rosa-vinho); 
+    color:var(--branco); 
+    box-shadow: var(--sombra-botao); 
+  }
+  .nav-badge{
+    margin-left:auto; background: rgba(122,46,58,.14); color: var(--rosa-escuro); font-size:10.5px;
+    padding:2px 7px; border-radius:20px; font-weight:700;
+  }
+  .nav-btn.active .nav-badge{ background: rgba(255,255,255,.25); color: var(--branco); }
+
+  .sidebar-foot{ padding-top:16px; border-top:1px solid rgba(122,46,58,.14); }
+  .logout-btn{
+    display:flex; align-items:center; gap:9px; width:100%;
+    border:none; background:transparent; color: var(--rosa-vinho); cursor:pointer;
+    padding:10px 14px; border-radius: var(--radius-pill); font-size:13px; font-weight:700;
+    transition: background .2s ease, color .2s ease;
+  }
+  .logout-btn:hover{ background: rgba(122,46,58,.08); color: var(--rosa-escuro); }
+
+  .main{ flex:1; min-width:0; padding: 30px 36px 60px; }
+  .topbar{ display:flex; align-items:center; justify-content:space-between; margin-bottom:26px; flex-wrap:wrap; gap:12px; }
+
+  .topbar h1{ margin:0; 
+    font-family: var(--fonte-titulo);
+    font-size:24px; 
+    color: var(--rosa-vinho); 
+  }
+
+  .topbar .sub{ 
+    font-size:13px;
+    font-family: var(--fonte-principal);
+    color: var(--marrom); 
+    margin-top:2px; 
+  }
+  .view-store-link{
+    text-decoration:none; 
+    font-size:13px; 
+    font-weight:700; 
+    color: var(--rosa-vinho);
+    border-bottom: 1.5px solid var(--rosa-vinho); 
+    padding-bottom:2px;
+  }
+
+  .view{ display:none; }
+  .view.active{ display:block; animation: fadein .35s ease; }
+  @keyframes fadein{ from{ opacity:0; transform:translateY(6px);} to{ opacity:1; transform:translateY(0);} }
+
+  /* ---------------- DASHBOARD ---------------- */
+  .stat-grid{
+    display:grid; grid-template-columns: repeat(4, 1fr); gap:18px; margin-bottom:30px;
+  }
+  .stat-card{
+    --accent: var(--rosa-vinho);
+    background: var(--rosa-claro); 
+    border-radius: var(--radius-card); 
+    padding:20px;
+    box-shadow: var(--sombra-cupcake);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+  .stat-card:hover{
+    transform: translateY(-3px);
+    box-shadow: 0 16px 30px -18px rgba(94,36,61,.4);
+  }
+  .stat-card .ico{
+    width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    font-size:16px; margin-bottom:12px;
+  }
+  .stat-card .label{ font-size:12px; color: var(--rosa-vinho); margin-bottom:4px; }
+  .stat-card .value{ font-family:'Playfair Display'; font-size:24px; color: var(--marrom); font-weight:700; }
+
+  /* Cor de cada card do dashboard (antes vinha como style="" direto no HTML) */
+  .stat-orders{ --accent: #A13A52; }
+  .stat-orders .ico{ background:#F3C9D4; }
+
+  .stat-revenue{ --accent: #6F8F63; }
+  .stat-revenue .ico{ background:#D7E6CD; }
+
+  .stat-pending{ --accent: #C9973F; }
+  .stat-pending .ico{ background:#F1DFAF; }
+
+  .stat-flavor{ --accent: #A985A0; }
+  .stat-flavor .ico{ background:#E3D6E0; }
+
+  /* O nome do sabor pode ser mais longo que os outros valores, por isso é menor */
+  #statTopFlavor{ font-size:16px; }
+
+  .panel-block{
+    background: var(--rosa-claro); 
+    border-radius: var(--radius-card); 
+    padding:22px 24px;
+    border: 1px solid var(--border); 
+    box-shadow: 0 12px 28px -18px rgba(94,36,61,.25);
+  }
+
+  .panel-block h2{ 
+    margin:0 0 4px; 
+    font-size:17px; 
+    color: var(--marrom); 
+  }
+
+  .panel-block .sub{ 
+    font-size:12.5px; 
+    color: var(--marrom); 
+    margin:0 0 20px; }
+
+  .mini-row{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:11px 0; border-bottom:1px solid var(--border); font-size:13px;
+  }
+  .mini-row:last-child{ border-bottom:none; }
+  .mini-row .who{ font-weight:700; color: var(--marrom-escuro); }
+  .mini-row .when{ font-size:11px; color: var(--texto-claro); }
+
+  /* ---------------- STATUS BADGES ---------------- */
+  .badge{
+    display:inline-flex; align-items:center; gap:5px; font-size:11.5px; font-weight:700;
+    padding:5px 12px; border-radius:20px; cursor:pointer; user-select:none;
+    border:none; transition: filter .15s ease, transform .15s ease;
+  }
+  .badge:hover{ filter:brightness(0.95); }
+  .badge:active{ transform: scale(0.97); }
+  .badge.pendente{ background:#F3C9D4; color:#7E3450; }
+  .badge.preparando{ background:#F1DFAF; color:#7A5A16; }
+  .badge.pronto{ background:#D7E6CD; color:#3F5C33; }
+  .badge.entregue{ background:#E3D6E0; color:#46192C; }
+
+  /* ---------------- ORDERS ---------------- */
+  .filter-pills{ display:flex; gap:8px; margin-bottom:18px; flex-wrap:wrap; }
+  .pill-btn{
+    padding: 8px 18px;
+  border: 1px solid var(--rosa-medio);
+  border-radius: var(--radius-pill);
+  background: var(--branco);
+  color: var(--marrom);
+  font-family: var(--fonte-principal);
+  font-size: 13px;
+  cursor: pointer;
+  transition: border-color var(--transicao), background var(--transicao), color var(--transicao);
+  }
+
+  .pill-btn:hover {
+  border-color: var(--rosa-vinho);
+}
+
+  .pill-btn.active{ 
+    border-color: var(--rosa-vinho);
+    background: var(--rosa-vinho);
+    color: var(--branco); 
+}
+
+  .order-card{
+    background: var(--branco); border-radius: var(--radius-card); border:1px solid var(--border);
+    padding:16px 20px; margin-bottom:12px; box-shadow: 0 10px 22px -18px rgba(94,36,61,.3);
+    transition: box-shadow .2s ease;
+  }
+  .order-head{ display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; cursor:pointer; }
+  .order-id{ font-weight:700; color: var(--rosa-escuro); font-size:14px; }
+  .order-when{ font-size:11.5px; color: var(--texto-claro); }
+  .order-total{ font-weight:700; color: var(--rosa-escuro); }
+  .order-method{ font-size:11.5px; color: var(--texto-claro); }
+  .order-items{ margin-top:12px; padding-top:12px; border-top:1px dashed var(--border); display:none; }
+  .order-card.open .order-items{ display:block; }
+  .order-item-row{ display:flex; justify-content:space-between; font-size:12.5px; padding:4px 0; color: var(--marrom-escuro); }
+  .empty-state{ text-align:center; padding:50px 20px; color: var(--texto-claro); }
+  .empty-state .em{ font-size:36px; display:block; margin-bottom:10px; }
+
+  /* ---------------- CARDÁPIO ---------------- */
+  .menu-toolbar{ display:flex; align-items:center; justify-content:space-between; gap:14px; margin-bottom:18px; flex-wrap:wrap; }
+  .add-flavor-btn{
+    padding: 8px 18px;
+
+  border: 1px solid var(--rosa-medio);
+  border-radius: var(--radius-pill);
+  background: var(--rosa-vinho);
+
+  color: var(--branco);
+  font-family: var(--fonte-principal);
+  font-size: 13px;
+
+  cursor: pointer;
+  transition: border-color var(--transicao), background var(--transicao), transform .15s ease;
+  }
+
+  .add-flavor-btn:hover{
+    border-color: var(--rosa-vinho-hover);
+    background: var(--rosa-vinho-hover);
+    transform: translateY(-1px);
+  }
+.add-flavor-btn.active {
+  border-color: var(--rosa-vinho);
+  background: var(--rosa-vinho);
+  color: var(--branco);
+}
+  .menu-grid{ display:grid; grid-template-columns: repeat(auto-fill, minmax(230px,1fr)); gap:18px; }
+  .menu-card{
+    background: var(--branco); border-radius: var(--radius-card); overflow:hidden;
+    border:1px solid var(--border); box-shadow: 0 10px 22px -18px rgba(94,36,61,.3);
+    display:flex; flex-direction:column;
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+  .menu-card:hover{
+    transform: translateY(-3px);
+    box-shadow: 0 16px 30px -18px rgba(94,36,61,.4);
+  }
+  .menu-card-photo{
+    height:120px; display:flex; align-items:center; justify-content:center; font-size:42px;
+    position:relative; background:#F3E3E9;
+  }
+  /* Quando o sabor tem imagem cadastrada, o fundo cinza/rosa dá lugar à foto
+     (antes isso vinha como style="background:..." direto no JavaScript) */
+  .menu-card-photo.has-image{ background: transparent; }
+  .menu-card-actions{ position:absolute; top:8px; right:8px; display:flex; gap:6px; }
+  .icon-btn{
+    width:28px; height:28px; border-radius:50%; border:none; cursor:pointer;
+    background: rgba(255,255,255,.9); display:flex; align-items:center; justify-content:center; font-size:12.5px;
+    transition: background .2s ease, transform .15s ease;
+  }
+  .icon-btn:hover{ transform: scale(1.08); }
+  .icon-btn.edit:hover{ background:var(--branco); }
+  .icon-btn.delete:hover{ background:var(--rosa-claro); }
+  .menu-card-badge{
+    position:absolute; top:8px; left:8px; background: rgba(255,255,255,.9);
+    font-size:10px; padding:3px 9px; border-radius:20px; font-weight:700; color: var(--rosa-escuro);
+  }
+  .menu-card-body{ padding:14px 16px 16px; flex:1; display:flex; flex-direction:column; }
+  .menu-card-body .name{ 
+    font-weight:700; 
+    font-size:14.5px; 
+    margin-bottom:4px; 
+    color: var(--marrom-escuro);
+  }
+  .menu-card-body .desc{ font-size:12px; color: var(--marrom); flex:1; margin-bottom:10px; line-height:1.5; }
+  .menu-card-body .price{ font-weight:700; color: var(--rosa-vinho); font-size:15px; }
+
+  /* ---------------- MODAL ---------------- */
+  .modal-overlay{
+    position:fixed; inset:0; background: rgba(74,42,53,.45); backdrop-filter: blur(2px);
+    display:none; align-items:center; justify-content:center; z-index:50; padding:20px;
+  }
+  .modal-overlay.show{ display:flex; }
+  .modal-box{
+    background: var(--branco); border-radius: var(--radius-card); width:100%; max-width:420px;
+    padding:30px 28px; box-shadow: var(--sombra-card); max-height:90vh; overflow-y:auto;
+    animation: loginEntrada 0.3s ease;
+  }
+  .modal-box h2{ margin:0 0 18px; font-size:19px; color: var(--rosa-escuro); }
+  .field{ margin-bottom:14px; }
+  .field label{ display:block; font-size:12px; font-weight:700; margin-bottom:6px; }
+  .field input, .field select, .field textarea{
+    width:100%; padding:11px 13px; border-radius: var(--radius-pill);
+    border:1.5px solid var(--border); background: var(--rosa-fundo);
+    font-family:'Quicksand'; font-size:13.5px; outline:none; resize:vertical;
+    transition: border-color .2s ease, box-shadow .2s ease;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{
+    border-color: var(--rosa-vinho); box-shadow:0 0 0 4px rgba(178,76,107,.15); background:var(--branco);
+  }
+  .modal-actions{ display:flex; gap:10px; margin-top:20px; }
+  .btn-secondary, .btn-primary{
+    flex:1; border:none; cursor:pointer; padding:12px; border-radius:999px; font-weight:700; font-size:13.5px;
+    transition: all .2s ease;
+  }
+  .btn-secondary{ background: var(--rosa-fundo); color: var(--marrom-escuro); }
+  .btn-secondary:hover{ background: var(--border); }
+  .btn-primary{ background: var(--rosa-vinho); color:var(--branco); box-shadow: 0 12px 22px -10px rgba(178,76,107,.6); }
+  .btn-primary:hover{ background:var(--rosa-vinho-hover); }
+
+  .toast{
+    position:fixed; bottom:24px; left:50%; transform: translateX(-50%) translateY(20px);
+    background: var(--rosa-escuro); color:var(--branco); padding:12px 22px; border-radius:999px;
+    font-size:13px; font-weight:700; opacity:0; pointer-events:none; transition: all .3s ease;
+    z-index:60;
+  }
+  .toast.show{ opacity:1; transform: translateX(-50%) translateY(0); }
+
+  @media (max-width: 900px){
+    .stat-grid{ grid-template-columns: repeat(2,1fr); }
+  }
+  @media (max-width: 760px){
+    #app.show{ flex-direction:column; }
+    .sidebar{ width:100%; height:auto; position:relative; flex-direction:row; align-items:center; padding:14px 16px; overflow-x:auto; }
+    .sidebar-brand{ padding:0 12px 0 0; }
+    .nav-group{ flex-direction:row; flex:none; }
+    .sidebar-foot{ border-top:none; padding-top:0; margin-left:auto; }
+    .main{ padding: 22px 16px 50px; }
+    .stat-grid{ grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 480px){
+    .stat-grid{ grid-template-columns: 1fr; }
+    .order-head{ flex-direction: column; align-items: flex-start; }
+  }

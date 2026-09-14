@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Doce Encanto - Login</title>
+<meta name="description" content="Acesse sua conta Doce Encanto e acompanhe seus pedidos.">
+
+<link rel="icon" href="imagens/icon2.png" type="image/png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/login.css">
+</head>
+
+<body>
+<!-- gota de chocolate (apenas desktop) -->
+  <svg class="choco-drip" viewBox="0 0 260 90" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,0 H260 V20 C240,20 235,55 220,55 C205,55 205,25 190,25 C175,25 175,45 160,45 C145,45 145,15 130,15 C115,15 115,65 100,65 C85,65 85,20 70,20 C55,20 55,40 40,40 C25,40 25,10 0,10 Z" fill="#5b3327"/>
+  </svg>
+
+  <div class="login-card">
+
+    <!-- PAINEL DA MARCA (some no mobile) -->
+    <div class="brand-panel">
+      <div class="brand-blob-top"></div>
+      <div class="brand-blob-bottom"></div>
+
+      <img src="imagens/icon.png" alt=" Logo Doce encanto" class="cupcake-icon">
+
+      <h1 class="brand-title">Doce Encanto</h1>
+      
+      <div class="divider-line">
+        <span></span><span class="heart-mini">&#9829;</span><span></span>
+      </div>
+      <div class="brand-sub">Confeitaria artesanal</div>
+    </div>
+
+    <!-- PAINEL DO FORMULARIO -->
+    <div class="form-panel">
+        <img src="imagens/icon.png" alt="Logo Doce encanto" class="cupcake-icon-small">
+        <h2 class="welcome-title">Bem-vindo!</h2>
+        <div class="welcome-sub">Entre na sua conta para continuar</div>
+        <div class="divider-line form-divider">
+        <span></span><span class="heart-mini">&#9829;</span><span></span>
+    </div>
+
+    <form id="login-form">
+      <div class="input-group">
+        <label for="email" class="sr-only">E-mail</label>
+        <span class="icon-left" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="2"/><path d="M3 7l9 6 9-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </span>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="E-mail"
+          autocomplete="email"
+          required
+        >
+      </div>
+
+      <div class="input-group">
+         <label for="senha" class="sr-only">Senha</label>
+        <span class="icon-left" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="9" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2"/></svg></span>
+        <input
+          type="password"
+          id="senha"
+          name="senha"
+          placeholder="Senha"
+          autocomplete="current-password"
+          required
+        >
+        <button type="button" class="toggle-eye" onclick="toggleSenha()">&#128065;</button>
+      </div>
+
+      <div class="row-options">
+        <label class="remember">
+          <input type="checkbox" id="lembrar" name="lembrar">
+          <span>Lembrar-me</span>
+        </label>
+        <a href="#" class="forgot-link">Esqueceu a senha?</a>
+      </div>
+
+      <button type="submit" class="btn-entrar">
+          Entrar &rarr;
+      </button>
+    </form>
+
+    <div class="or-divider">
+      <span></span> ou <span></span>
+    </div>
+
+    <div class="social-row">
+      <button class="btn-social">
+        <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.6 6.5 29.6 4.5 24 4.5 12.9 4.5 4 13.4 4 24.5S12.9 44.5 24 44.5 44 35.6 44 24.5c0-1.4-.1-2.7-.4-4z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.6 16 19 13 24 13c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.6 6.5 29.6 4.5 24 4.5c-7.7 0-14.3 4.4-17.7 10.2z"/><path fill="#4CAF50" d="M24 44.5c5.5 0 10.4-1.9 14.3-5.1l-6.6-5.4C29.7 35.6 27 36.5 24 36.5c-5.3 0-9.7-3.4-11.3-8.1l-6.6 5.1C9.6 40 16.3 44.5 24 44.5z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.3 4.2-4.2 5.6l6.6 5.4C41.9 36 44 30.8 44 24.5c0-1.4-.1-2.7-.4-4z"/></svg>
+        Entrar com Google
+      </button>
+      <button class="btn-social">
+        <svg width="18" height="18" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#1877F2"/><path fill="#fff" d="M15.1 12.3h-2v7.6h-3.1v-7.6H8.3V9.6h1.7V7.9c0-1.7.8-3.2 3.4-3.2h2.1v2.6h-1.4c-.5 0-.7.3-.7.8v1.5h2.1z"/></svg>
+        Entrar com Facebook
+      </button>
+    </div>
+
+      <div class="signup-text">
+        Não tem uma conta?
+        <a href="cadastro.html" class="btn-register">
+        Criar conta &rarr;
+       </a>
+     </div>
+
+  </div>
+
+<script src="js/login.js"></script>
+
+</body>
+</html>
