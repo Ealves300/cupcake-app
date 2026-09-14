@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Acompanhar pedido — Doce Encanto</title>
+
+  <!-- Fontes -->
+  <link rel="icon" href="imagens/icon2.png" type="image/png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:wght@400;500;600;700&family=Playfair+Display:wght@600;700&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="css/acompanhamento.css">
+</head>
+
+<body>
+
+  <!-- =====================================================
+       ELEMENTOS DECORATIVOS
+       ===================================================== -->
+
+  <div class="bloom b1">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="#E5A9BC">
+      <path d="M12 2c1 3 3 5 6 6-3 1-5 3-6 6-1-3-3-5-6-6 3-1 5-3 6-6z"/>
+    </svg>
+  </div>
+
+  <div class="bloom b2">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="#C15C7C">
+      <path d="M12 21s-7-4.5-9.5-9C1 8 3 4 7 4c2 0 4 1.5 5 3.5C13 5.5 15 4 17 4c4 0 6 4 4.5 8-2.5 4.5-9.5 9-9.5 9z"/>
+    </svg>
+  </div>
+
+  <div class="bloom b3">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="#E5A9BC">
+      <path d="M12 2c1 3 3 5 6 6-3 1-5 3-6 6-1-3-3-5-6-6 3-1 5-3 6-6z"/>
+    </svg>
+  </div>
+
+  <div class="bloom b4">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="#C15C7C">
+      <path d="M12 21s-7-4.5-9.5-9C1 8 3 4 7 4c2 0 4 1.5 5 3.5C13 5.5 15 4 17 4c4 0 6 4 4.5 8-2.5 4.5-9.5 9-9.5 9z"/>
+    </svg>
+  </div>
+
+
+  <!-- =====================================================
+       CONTEÚDO PRINCIPAL
+       ===================================================== -->
+
+  <div class="stage" id="stage">
+
+    <!-- ===================================================
+         LADO ESQUERDO — RESUMO DO PEDIDO
+         =================================================== -->
+
+    <aside class="summary">
+
+      <!-- Logo -->
+      <div class="topbar">
+        <a href="catalogo.html" class="brand">
+
+          <img
+            src="imagens/icon.png"
+            alt="Doce Encanto"
+            class="logo-mark"
+          >
+
+          <span class="brand-text">
+            <span class="n1">DOCE ENCANTO</span>
+            <br>
+            <span class="n2">Confeitaria artesanal</span>
+          </span>
+
+        </a>
+      </div>
+
+
+      <!-- Cabeçalho do resumo -->
+      <div class="summary-head">
+
+        <p class="eyebrow">
+          Seu pedido
+        </p>
+
+        <h2 id="orderNumberLabel">
+          Pedido #0000
+        </h2>
+
+        <p id="orderDateLabel">
+          Feito em --/-- às --:--
+        </p>
+
+      </div>
+
+
+      <!-- Produtos -->
+      <div class="item-list" id="itemList">
+
+        <div class="item">
+
+          <span class="item-thumb" style="background:#E9A6B7;">
+            🧁
+          </span>
+
+          <span class="item-info">
+            <span class="name">Carregando sua caixinha…</span>
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <!-- Totais -->
+      <hr class="summary-divider">
+
+      <div class="totals-row">
+        <span>Forma de pagamento</span>
+        <span id="paymentMethodValue">—</span>
+      </div>
+
+      <div class="totals-row grand">
+        <span>Total</span>
+        <span class="amount" id="grandTotal">
+          R$ 0,00
+        </span>
+      </div>
+
+
+      <!-- Rodapé -->
+      <div class="summary-foot">
+        <p>
+          Feito com ♥ para quem ama um docinho de verdade.
+        </p>
+      </div>
+
+    </aside>
+
+
+    <!-- ===================================================
+         LADO DIREITO — ACOMPANHAMENTO
+         =================================================== -->
+
+    <section class="tracking">
+
+      <!-- Cabeçalho -->
+      <header class="tracking-head">
+
+        <h1>
+          Acompanhe sua caixinha
+        </h1>
+
+        <p class="sub" id="statusSub">
+          Recebemos seu pedido e já estamos separando os docinhos.
+        </p>
+
+      </header>
+
+
+      <!-- =================================================
+           LINHA DO TEMPO
+           ================================================= -->
+
+      <ol class="tracker" id="tracker">
+
+        <li class="tracker-step" data-step="0">
+          <span class="tracker-icon">🧾</span>
+          <span class="tracker-info">
+            <span class="tracker-title">Pedido confirmado</span>
+            <span class="tracker-time" data-time="0"></span>
+          </span>
+        </li>
+
+        <li class="tracker-step" data-step="1">
+          <span class="tracker-icon">🧁</span>
+          <span class="tracker-info">
+            <span class="tracker-title">Em preparo</span>
+            <span class="tracker-time" data-time="1"></span>
+          </span>
+        </li>
+
+        <li class="tracker-step" data-step="2">
+          <span class="tracker-icon">🛵</span>
+          <span class="tracker-info">
+            <span class="tracker-title">Saiu para entrega</span>
+            <span class="tracker-time" data-time="2"></span>
+          </span>
+        </li>
+
+        <li class="tracker-step" data-step="3">
+          <span class="tracker-icon">💗</span>
+          <span class="tracker-info">
+            <span class="tracker-title">Entregue</span>
+            <span class="tracker-time" data-time="3"></span>
+          </span>
+        </li>
+
+      </ol>
+
+
+      <!-- =================================================
+           CARTÃO DE STATUS ATUAL
+           ================================================= -->
+
+      <div class="status-card" id="statusCard">
+
+        <div class="status-cupcake">
+          <svg viewBox="0 0 100 100" width="54" height="54">
+            <circle cx="50" cy="30" r="10" fill="#B24C6B"/>
+            <path d="M28 42 C28 28 72 28 72 42 L72 46 L28 46 Z" fill="#E48DA8"/>
+            <path d="M22 46 L78 46 L72 88 L28 88 Z" fill="#F3D6A0"/>
+            <path d="M22 46 L78 46 L76 54 L24 54 Z" fill="#E9C48B"/>
+            <path d="M22 60 L78 60 L76 68 L24 68 Z" fill="#E9C48B" opacity=".6"/>
+            <path d="M22 74 L78 74 L76 82 L24 82 Z" fill="#E9C48B" opacity=".6"/>
+          </svg>
+        </div>
+
+        <div class="status-copy">
+          <span class="status-eyebrow">Status atual</span>
+          <span class="status-title" id="statusTitle">Pedido confirmado</span>
+          <span class="status-desc" id="statusDesc">
+            Assim que a equipe começar o preparo, avisamos por aqui.
+          </span>
+        </div>
+
+      </div>
+
+
+      <!-- Ações -->
+      <div class="tracking-actions">
+
+        <a href="catalogo.html" class="ghost-btn">
+          Voltar para o cardápio
+        </a>
+
+        <a href="meus-pedidos.html" class="ghost-btn">
+          Ver todos os pedidos
+        </a>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         ESTADO: NENHUM PEDIDO ENCONTRADO
+         =================================================== -->
+
+    <section class="empty-state" id="emptyState">
+
+      <div class="empty-cupcake">🧁</div>
+
+      <h2>Nenhum pedido por aqui ainda</h2>
+
+      <p>
+        Que tal montar sua primeira caixinha de docinhos?
+      </p>
+
+      <a href="catalogo.html" class="pay-btn">
+        Ver cardápio
+      </a>
+
+    </section>
+
+  </div>
+
+
+  <!-- =====================================================
+       JAVASCRIPT
+       ===================================================== -->
+
+  <script src="js/acompanhamento.js"></script>
+
+</body>
+</html>
