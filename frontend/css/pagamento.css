@@ -1,8 +1,6 @@
 /* =========================================================
    DOCE ENCANTO — ESTILOS GERAIS
    CSS refatorado mantendo a identidade visual original
-   + responsividade mobile revisada (tipografia fluida,
-   alvos de toque maiores, sem esconder conteúdo)
    ========================================================= */
 
 
@@ -66,27 +64,15 @@
   --fonte-subtitulo: 'Montserrat', sans-serif;
   --fonte-titulo: 'Playfair Display', Georgia, serif;
 
-  /* ---------- Tamanhos de texto (fluidos) ----------
-     clamp(mínimo, ideal-em-vw, máximo) deixa o texto
-     escalar suavemente entre celular e desktop, sem
-     "saltos" bruscos entre breakpoints. */
+  /* ---------- Tamanhos de texto ---------- */
   --texto-pequeno: 0.85rem;
   --texto-normal: 0.95rem;
   --texto-medio: 1rem;
 
   --titulo-mobile: 2.4rem;
   --titulo-desktop: 3.5rem;
-  --titulo-hero: clamp(1.9rem, 6vw + 0.5rem, 3.5rem);
-  --titulo-secao: clamp(1.5rem, 3vw + 0.9rem, 2.25rem);
-  --titulo-card: clamp(1.15rem, 1.4vw + 0.9rem, 1.375rem);
-  --titulo-about: clamp(1.6rem, 3.6vw + 0.6rem, 2.75rem);
-
-  /* ---------- Alvo mínimo de toque (mobile) ---------- */
-  --toque-min: 44px;
-
-  /* ---------- Espaçamentos fluidos de seção ---------- */
-  --espaco-secao: clamp(32px, 6vw, 70px);
-  --espaco-lateral: clamp(16px, 5vw, 24px);
+  --titulo-secao: 36px;
+  --titulo-card: 22px;
 }
 
 
@@ -102,7 +88,6 @@
 
 html {
   scroll-behavior: smooth;
-  -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -119,26 +104,6 @@ a {
 
 button {
   font-family: inherit;
-}
-
-img {
-  max-width: 100%;
-  height: auto;
-}
-
-/* Estado de foco visível e consistente em qualquer elemento
-   interativo — acessibilidade e acabamento profissional */
-a:focus-visible,
-button:focus-visible,
-.filter-btn:focus-visible,
-.add-btn:focus-visible,
-.qty-btn:focus-visible,
-.order-cta:focus-visible,
-.hero-cta:focus-visible,
-.cart-btn:focus-visible,
-.menu-btn:focus-visible {
-  outline: 2px solid var(--rosa-vinho-hover);
-  outline-offset: 2px;
 }
 
 
@@ -169,24 +134,13 @@ button:focus-visible,
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .petal {
-    animation: none;
-    opacity: 0.3;
-  }
-}
-
 
 /* =========================================================
    04. HEADER + HERO
    ========================================================= */
 
 .header-hero-container {
-  /* 100svh acompanha melhor a altura real da tela no celular
-     (sem contar a barra de endereço); 90vh fica como reserva
-     para navegadores que ainda não suportam svh */
   min-height: 90vh;
-  min-height: 90svh;
   background-image: url(../imagens/plano_fundo.png);
   background-repeat: no-repeat;
   background-position: center;
@@ -208,7 +162,7 @@ button:focus-visible,
 
   max-width: 1100px;
   margin: 0 auto;
-  padding: 12px var(--espaco-lateral);
+  padding: 12px 24px;
 }
 
 .header-logo {
@@ -231,21 +185,19 @@ button:focus-visible,
 .brand-text .n1 {
   color: var(--marrom);
   font-family: var(--fonte-marca);
-  font-size: clamp(11px, 1.6vw + 6px, 16px);
+  font-size: 16px;
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  white-space: nowrap;
 }
 
 .brand-text .n2 {
   color: var(--marrom);
   font-family: var(--fonte-subtitulo);
-  font-size: clamp(8px, 0.8vw + 6px, 12px);
+  font-size: 12px;
   font-weight: 300;
   letter-spacing: 0.25em;
   text-transform: lowercase;
-  white-space: nowrap;
 }
 
 .header-nav {
@@ -378,7 +330,6 @@ button:focus-visible,
   position: relative;
 
   min-height: 90vh;
-  min-height: 90svh;
   padding: 120px 20px;
   text-align: left;
 }
@@ -394,7 +345,7 @@ button:focus-visible,
   margin-bottom: 10px;
   color: var(--marrom);
   font-family: var(--fonte-titulo);
-  font-size: var(--titulo-hero);
+  font-size: var(--titulo-desktop);
   font-weight: 500;
   line-height: 1.1;
 }
@@ -410,20 +361,16 @@ button:focus-visible,
 
 .hero-tagline {
   margin-bottom: 26px;
-  max-width: 46ch;
 
   color: var(--marrom);
-  font-size: clamp(14px, 1vw + 11px, 16px);
+  font-size: 16px;
   line-height: 1.7;
   opacity: 0.85;
 }
 
 .hero-cta {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  display: inline-block;
 
-  min-height: var(--toque-min);
   padding: 13px 34px;
 
   border: 1px solid var(--rosa-vinho);
@@ -446,28 +393,18 @@ button:focus-visible,
 
 /* =========================================================
    05. BENEFÍCIOS
-   ---------------------------------------------------------
-   Em telas menores, vira uma faixa flexível que "quebra"
-   linha e centraliza — nenhum benefício fica escondido,
-   diferente de uma grade rígida de 5 colunas.
    ========================================================= */
 
 .features {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: clamp(14px, 3vw, 18px);
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 18px;
 
   max-width: 1000px;
   margin: 0 auto;
-  padding: 10px var(--espaco-lateral) var(--espaco-secao);
+  padding: 10px 24px 60px;
 
   text-align: center;
-}
-
-.features > * {
-  flex: 1 1 150px;
-  max-width: 190px;
 }
 
 .feature-icon {
@@ -546,7 +483,7 @@ button:focus-visible,
 .catalog {
   max-width: 1100px;
   margin: 0 auto;
-  padding: var(--espaco-secao) var(--espaco-lateral) 20px;
+  padding: 50px 24px 20px;
 }
 
 .filters {
@@ -566,10 +503,6 @@ button:focus-visible,
 }
 
 .filter-btn {
-  display: inline-flex;
-  align-items: center;
-
-  min-height: 38px;
   padding: 8px 18px;
 
   border: 1px solid var(--rosa-medio);
@@ -783,7 +716,6 @@ button:focus-visible,
   align-items: center;
   gap: 6px;
 
-  min-height: 38px;
   padding: 8px 16px;
 
   border: 1px solid var(--rosa-medio);
@@ -872,12 +804,6 @@ button:focus-visible,
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .stepper {
-    animation: none;
-  }
-}
-
 
 /* =========================================================
    08. SOBRE
@@ -956,7 +882,7 @@ button:focus-visible,
 
   color: var(--marrom-escuro);
   font-family: var(--fonte-titulo);
-  font-size: var(--titulo-about);
+  font-size: 44px;
   font-weight: 500;
   line-height: 1.25;
   text-align: center;
@@ -1066,7 +992,7 @@ button:focus-visible,
    ========================================================= */
 
 .order {
-  padding: var(--espaco-secao) var(--espaco-lateral) 30px;
+  padding: 70px 24px 30px;
 
   text-align: center;
 }
@@ -1166,11 +1092,6 @@ button:focus-visible,
 }
 
 .order-cta {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  min-height: var(--toque-min);
   padding: 14px 36px;
 
   border: 1px solid var(--rosa-vinho);
@@ -1203,7 +1124,7 @@ button:focus-visible,
    ========================================================= */
 
 .site-footer {
-  padding: 40px var(--espaco-lateral) 30px;
+  padding: 40px 24px 30px;
 
   border-top: 1px solid var(--rosa-claro);
 
@@ -1234,7 +1155,6 @@ button:focus-visible,
 .footer-admin-link{
   display: inline-block;
   margin-top: 14px;
-  padding: 6px 4px;
   font-size: 11px;
   color: var(--placeholder);
   text-decoration: none;
@@ -1249,7 +1169,7 @@ button:focus-visible,
 
 
 /* =========================================================
-   11. RESPONSIVIDADE — TABLETS (≤900px)
+   11. RESPONSIVIDADE — TABLETS
    ========================================================= */
 
 @media (max-width: 900px) {
@@ -1274,6 +1194,10 @@ button:focus-visible,
     max-width: 100%;
   }
 
+  .about-text h2 {
+    font-size: 32px;
+  }
+
   .about-image {
     width: 100%;
     height: 320px;
@@ -1282,27 +1206,34 @@ button:focus-visible,
 }
 
 @media (max-width: 820px) {
+  .header-hero-container {
+    min-height: 72vh;
+  }
+
+  .hero {
+    min-height: 72vh;
+    padding: 90px 20px 60px;
+  }
+
   .hero-content {
-    padding: 20px 6% 20px 6%;
-    text-align: center;
+    padding: 20px 4% 20px 1%;
   }
 
   .hero-content h3 {
-    text-align: center;
+    font-size: 2.7rem;
   }
 
-  .hero-divider,
   .hero-tagline {
-    margin-left: auto;
-    margin-right: auto;
-    justify-content: center;
-    text-align: center;
+    font-size: 15px;
   }
 
-  .hero-cta {
-    display: flex;
-    width: max-content;
-    margin: 0 auto;
+  .features {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .feature:nth-child(4),
+  .feature:nth-child(5) {
+    display: none;
   }
 
   .grid {
@@ -1317,8 +1248,8 @@ button:focus-visible,
   .header-nav {
     position: absolute;
     top: calc(100% + 8px);
-    right: var(--espaco-lateral);
-    left: var(--espaco-lateral);
+    right: 24px;
+    left: 24px;
     z-index: 30;
 
     flex-direction: column;
@@ -1343,8 +1274,7 @@ button:focus-visible,
   }
 
   .header-nav a {
-    display: block;
-    padding: 16px 20px;
+    padding: 14px 20px;
     border-bottom: 1px solid var(--rosa-hover);
     font-size: 15px;
   }
@@ -1360,9 +1290,7 @@ button:focus-visible,
 
 
 /* =========================================================
-   12. RESPONSIVIDADE — CELULARES (≤480px)
-   Prioriza alvos de toque confortáveis (mín. 44px) e
-   elementos empilhados em vez de espremidos.
+   12. RESPONSIVIDADE — CELULARES
    ========================================================= */
 
 @media (max-width: 480px) {
@@ -1372,30 +1300,53 @@ button:focus-visible,
   }
 
   .header-logo {
-    width: 34px;
-    height: 34px;
+    width: 32px;
+    height: 32px;
+  }
+
+  .brand-text .n1 {
+    font-size: 13px;
+  }
+
+  .brand-text .n2 {
+    font-size: 9px;
+    letter-spacing: 0.14em;
   }
 
   .header-actions {
-    gap: 4px;
+    gap: 6px;
   }
 
   .cart-btn,
   .menu-btn {
-    width: var(--toque-min);
-    height: var(--toque-min);
+    width: 34px;
+    height: 34px;
+  }
+
+  .header-hero-container {
+    min-height: 62vh;
+  }
+
+  .hero {
+    min-height: 62vh;
+    padding: 60px 20px 40px;
   }
 
   .hero-content {
-    padding: 10px 4%;
+    padding: 10px 0;
+  }
+
+  .hero-content h3 {
+    font-size: 2.1rem;
   }
 
   .hero-divider {
-    margin: 10px auto;
+    margin: 10px 0;
   }
 
   .hero-tagline {
-    margin: 0 auto 22px;
+    font-size: 14px;
+    margin-bottom: 20px;
   }
 
   .hero-tagline br {
@@ -1403,24 +1354,20 @@ button:focus-visible,
   }
 
   .hero-cta {
-    width: 100%;
-    padding: 14px 28px;
-    font-size: 14px;
+    padding: 12px 28px;
+    font-size: 13px;
   }
 
   .features {
-    padding-right: var(--espaco-lateral);
-    padding-left: var(--espaco-lateral);
-  }
-
-  .features > * {
-    flex-basis: 42%;
-    max-width: 160px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    padding-right: 16px;
+    padding-left: 16px;
   }
 
   .feature-icon {
-    width: 52px;
-    height: 52px;
+    width: 48px;
+    height: 48px;
     font-size: 18px;
   }
 
@@ -1432,23 +1379,17 @@ button:focus-visible,
     font-size: 11px;
   }
 
+  .catalog {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
   .grid {
     grid-template-columns: 1fr;
   }
 
-  .filter-btn {
-    min-height: var(--toque-min);
-  }
-
-  .add-btn {
-    min-height: var(--toque-min);
-    padding: 10px 18px;
-  }
-
-  .stepper .qty-btn {
-    width: 30px;
-    height: 30px;
-    font-size: 15px;
+  .card-name {
+    font-size: 19px;
   }
 
   .card-footer {
@@ -1463,21 +1404,21 @@ button:focus-visible,
     padding: 20px 0;
   }
 
+  .about-text h2 {
+    font-size: 30px;
+  }
+
   .about-image {
     height: 260px;
   }
 
+  .order {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
   .order-row {
     flex-wrap: wrap;
-  }
-
-  .order-row-name {
-    flex-basis: 100%;
-  }
-
-  .qty-btn {
-    width: 32px;
-    height: 32px;
   }
 
   .order-cta {
@@ -1496,29 +1437,30 @@ button:focus-visible,
   }
 
   .header-logo {
+    width: 28px;
+    height: 28px;
+  }
+
+  .brand-text .n1 {
+    font-size: 11px;
+  }
+
+  .brand-text .n2 {
+    font-size: 8px;
+    letter-spacing: 0.1em;
+  }
+
+  .cart-btn,
+  .menu-btn {
     width: 30px;
     height: 30px;
   }
 
-  .features > * {
-    flex-basis: 100%;
-    max-width: 220px;
-  }
-}
-
-
-/* =========================================================
-   14. TELAS EM PAISAGEM COM POUCA ALTURA (celular deitado)
-   Evita que o hero fique gigante e obrigue a rolar demais
-   ========================================================= */
-
-@media (max-height: 480px) and (orientation: landscape) {
-  .header-hero-container,
-  .hero {
-    min-height: auto;
+  .hero-content h3 {
+    font-size: 1.8rem;
   }
 
-  .hero {
-    padding: 90px 20px 50px;
+  .hero-tagline {
+    font-size: 13px;
   }
 }
