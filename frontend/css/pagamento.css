@@ -1176,7 +1176,7 @@ form {
   }
 
   .summary {
-    order:2;
+    order:1;
     border-radius: 0 0 var(--radius-card-mobile) var(--radius-card-mobile);
     padding: 28px 24px 24px;
   }
@@ -1186,7 +1186,7 @@ form {
   }
 
   .payment {
-    order:1;
+    order:2;
     padding: 28px 22px;
     border-radius: var(--radius-card-mobile) var(--radius-card-mobile) 0 0;
   }
